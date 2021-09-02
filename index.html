@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="xiamo&#39;s blog">
+  <meta name="keyword" content="blog, hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      日常随笔
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>日常随笔</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link active">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/series" class="item-link">Series</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link mobile-active">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/series" class="menu-link">Series</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <main class="app-body">
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2021/09/02/border%20%E7%9A%84%E9%AA%9A%E6%93%8D%E4%BD%9C%20%20css%20%E7%94%BB%E4%B8%89%E8%A7%92%E5%BD%A2/">border 的骚操作 css 画三角形</a>
+      </h2>
+      <p class="article-date">September 2, 2021</p>
+      
+        
+  <a href="/tags#html" >
+    <span class="tag-code">html</span>
+  </a>
+
+  <a href="/tags#css" >
+    <span class="tag-code">css</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          border-width: 50px 18px 50px 38px;
+border-style: solid;
+border-color: red green yellow pink;
+四个参数 都是 上 右 下 左
+
+三个参数 上 （左右） 下
+
+两个就是 （上下） （左右）
+
+
+进阶：  ...
+        
+      </div>
+      <a class="more" href="/2021/09/02/border%20%E7%9A%84%E9%AA%9A%E6%93%8D%E4%BD%9C%20%20css%20%E7%94%BB%E4%B8%89%E8%A7%92%E5%BD%A2/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/array%E6%96%B9%E6%B3%95/">array方法</a>
+      </h2>
+      <p class="article-date">September 2, 2021</p>
+      
+        
+  <a href="/tags#js" >
+    <span class="tag-code">js</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          flat / flatMap
+数组的成员有时还是数组，Array.prototype.flat()用于将嵌套的数组“拉平”，变成一维数组。该方法返回一个新数组，对原数据没有影响。
+[1, 2, [3, 4]].flat() // [1, 2, 3, 4]
+上面代码中，原数组的成员里面有一个数 ...
+        
+      </div>
+      <a class="more" href="/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/array%E6%96%B9%E6%B3%95/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/$(window).load%20%E4%B8%8E%20$(window).ready%E5%8C%BA%E5%88%AB/">$(window).load 与 $(window).ready区别</a>
+      </h2>
+      <p class="article-date">September 2, 2021</p>
+      
+        
+  <a href="/tags#html" >
+    <span class="tag-code">html</span>
+  </a>
+
+  <a href="/tags#js" >
+    <span class="tag-code">js</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          
+
+        
+      </div>
+      <a class="more" href="/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/$(window).load%20%E4%B8%8E%20$(window).ready%E5%8C%BA%E5%88%AB/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/defineProperty/">defineProperty</a>
+      </h2>
+      <p class="article-date">September 2, 2021</p>
+      
+        
+  <a href="/tags#js" >
+    <span class="tag-code">js</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          语法
+Object.defineProperty(obj, prop, descriptor)
+直接在一个对象上定义一个新属性，或者修改一个对象的现有属性，并返回此对象。
+eg:
+const object1 = {a: 7};
+Object.defineProperty(object1, ‘ ...
+        
+      </div>
+      <a class="more" href="/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/defineProperty/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/set%20get%20Vue%20(defineProperty)/">set get Vue (defineProperty)</a>
+      </h2>
+      <p class="article-date">September 2, 2021</p>
+      
+        
+  <a href="/tags#html" >
+    <span class="tag-code">html</span>
+  </a>
+
+  <a href="/tags#js" >
+    <span class="tag-code">js</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          set get
+set 设置某个键的方法
+get 读取某个键的方法
+eg:
+
+
+回顾 defineProperty方法：
+直接在一个对象上定义一个新属性，或者修改一个对象的现有属性，并返回此对象。
+对象里目前存在的属性描述符有两种主要形式：数据描述符和存取描述符。数据描述符是一个具有值的属性 ...
+        
+      </div>
+      <a class="more" href="/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/set%20get%20Vue%20(defineProperty)/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AFEventLoop/">事件循环EventLoop</a>
+      </h2>
+      <p class="article-date">September 2, 2021</p>
+      
+        
+  <a href="/tags#js" >
+    <span class="tag-code">js</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          
+同步先执行
+异步都先扔到任务队列里 （宏任务， 为任务）
+微任务一般放到任务队列尾部，宏任务等当前任务尾部抛出事件，等待下次任务队列执行开始的时候执行，因此微任务较早些，毫秒级，宏任务 几毫秒 几十毫秒 或者几百毫秒把， 比微任务要多。
+任务队列
+时间轴队列 每一帧
+
+        
+      </div>
+      <a class="more" href="/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AFEventLoop/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6%EF%BC%88GC%EF%BC%89/">垃圾回收机制（GC）</a>
+      </h2>
+      <p class="article-date">September 2, 2021</p>
+      
+        
+  <a href="/tags#js" >
+    <span class="tag-code">js</span>
+  </a>
+
+  <a href="/tags#gc" >
+    <span class="tag-code">gc</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          垃圾回收（GarbageCollection，GC），顾名思义就是释放垃圾占用的空间，防止内存泄露。有效的使用可以使用的内存，对内存堆中已经死亡的或者长时间没有使用的对象进行清除和回收。
+小知识 ： 不再用到的内存，没有及时释放，就叫做内存泄漏（memory leak）
+容易引起内存泄露的场 ...
+        
+      </div>
+      <a class="more" href="/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6%EF%BC%88GC%EF%BC%89/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/%E6%B5%85%E3%80%81%E6%B7%B1%E5%85%8B%E9%9A%86/">浅、深克隆</a>
+      </h2>
+      <p class="article-date">September 2, 2021</p>
+      
+        
+  <a href="/tags#js" >
+    <span class="tag-code">js</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          浅克隆
+都是只能复制外层属性，有复杂数据类型就不行了，第二层不行，原数组或者新数组更改，都会发生变化，因为是简单的复制，复制el 如果是复杂数据类型是址传递的
+法1：循环赋值
+var obj = {a: 1,b:2,c:{d:100,e:99}}
+function shallowClone1 ...
+        
+      </div>
+      <a class="more" href="/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/%E6%B5%85%E3%80%81%E6%B7%B1%E5%85%8B%E9%9A%86/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/%E9%97%AD%E5%8C%85/">闭包</a>
+      </h2>
+      <p class="article-date">September 2, 2021</p>
+      
+        
+  <a href="/tags#js" >
+    <span class="tag-code">js</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          类似文章：
+https://javascript.ruanyifeng.com/grammar/function.html\#toc13
+https://blog.csdn.net/weixin_43586120/article/details/89456183
+闭包（closure）是 J ...
+        
+      </div>
+      <a class="more" href="/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/%E9%97%AD%E5%8C%85/">Read more</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/%E9%98%B2%E6%8A%96%20%E8%8A%82%E6%B5%81/">防抖 节流</a>
+      </h2>
+      <p class="article-date">September 2, 2021</p>
+      
+        
+  <a href="/tags#html" >
+    <span class="tag-code">html</span>
+  </a>
+
+  <a href="/tags#js" >
+    <span class="tag-code">js</span>
+  </a>
+
+      
+      <div class="article-summary">
+        
+          防抖当持续触发事件时，一定时间段内没有再触发事件，事件处理函数才会执行一次，如果设定时间到来之前，又触发了事件，就重新开始延时。也就是说当一个用户一直触发这个函数，且每次触发函数的间隔小于既定时间，那么防抖的情况下只会执行一次。
+// 防抖
+function debounce(callbac ...
+        
+      </div>
+      <a class="more" href="/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/%E9%98%B2%E6%8A%96%20%E8%8A%82%E6%B5%81/">Read more</a>
+    </article>
+  
+
+  
+    <div class="guide-pager">
+  
+    <a class="unvisible" href="/"><span class="page-arrow">←</span> Prev</a>
+  
+  
+    <a href="/page/2/">Next<span class="page-arrow"> →</span></a>
+  
+</div>
+  
+</main>
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2021 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

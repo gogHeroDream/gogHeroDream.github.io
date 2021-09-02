@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="xiamo&#39;s blog">
+  <meta name="keyword" content="blog, hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      defineProperty | 日常随笔
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>日常随笔</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/series" class="item-link">Series</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/series" class="menu-link">Series</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>defineProperty</h2>
+  <p class="post-date">2021-09-02</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p><strong>语法</strong></p>
+<p>Object.defineProperty(obj, prop, descriptor)</p>
+<p>直接在一个对象上定义一个新属性，或者修改一个对象的现有属性，并返回此对象。</p>
+<p>eg:</p>
+<p>const object1 = {a: 7};</p>
+<p>Object.<strong>defineProperty</strong>(object1, ‘a’, {</p>
+<p>value: 42,</p>
+<p>writable: false //false 不可写 即只读</p>
+<p>});</p>
+<p>Object.<strong>defineProperty</strong>(object1, ‘b’, {</p>
+<p>value: 2</p>
+<p>});</p>
+<p>object1.a = 77; //这里改不掉， 描述里已经设置不可更改（只读）</p>
+<p>console.<strong>log</strong>(object1); // {a: 42, b: 2}</p>
+<p><strong>描述</strong></p>
+<p>该方法允许精确地添加或修改对象的属性。通过赋值操作添加的普通属性是可枚举的，在枚举对象属性时会被枚举到（<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/for...in">for…in</a><br>或 Object.keys<br><a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys">https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys</a>方法），可以改变这些属性的值，也可以删除这些属性。这个方法允许修改默认的额外选项（或配置）。默认情况下，使用<br>Object.defineProperty() 添加的属性值是不可修改（immutable）的。</p>
+<p>对象里目前存在的属性描述符有两种主要形式：<em>数据描述符</em>和<em>存取描述符</em>。<em>数据描述符</em>是一个具有值的属性，该值可以是可写的，也可以是不可写的。<em>存取描述符</em>是由<br>getter 函数和 setter<br>函数所描述的属性。一个描述符只能是这两者其中之一；不能同时是两者。</p>
+<p>这两种描述符都是对象。它们共享以下可选键值（默认值是指在使用<br>Object.defineProperty() 定义属性时的默认值）：</p>
+<p><strong>configurable</strong></p>
+<p>当且仅当该属性的 configurable 键值为 true<br>时，该属性的描述符才能够被改变，同时该属性也能从对应的对象上被删除。</p>
+<p><strong>默认为 false</strong>。</p>
+<p><strong>enumerable</strong></p>
+<p>当且仅当该属性的 enumerable 键值为 true 时，该属性才会出现在对象的枚举属性中。</p>
+<p><strong>默认为 false</strong>。</p>
+<p>数据描述符还具有以下可选键值：</p>
+<p><strong>value</strong></p>
+<p>该属性对应的值。可以是任何有效的 JavaScript 值（数值，对象，函数等）。</p>
+<p><strong>默认为</strong><br><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/undefined"><strong>undefined</strong></a>。</p>
+<p><strong>writable</strong></p>
+<p>当且仅当该属性的 writable 键值为 true 时，属性的值，也就是上面的<br>value，才能被赋值运算符改变。</p>
+<p><strong>默认为 false。</strong></p>
+<p>存取描述符还具有以下可选键值：</p>
+<p><strong>get</strong></p>
+<p>属性的 getter 函数，如果没有 getter，则为<br>undefined。当访问该属性时，会调用此函数。执行时不传入任何参数，但是会传入 this<br>对象（由于继承关系，这里的this并不一定是定义该属性的对象）。该函数的返回值会被用作属性的值。</p>
+<p><strong>默认为</strong><br><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/undefined"><strong>undefined</strong></a>。</p>
+<p><strong>set</strong></p>
+<p>属性的 setter 函数，如果没有 setter，则为<br>undefined。当属性值被修改时，会调用此函数。该方法接受一个参数（也就是被赋予的新值），会传入赋值时的<br>this 对象。</p>
+<p><strong>默认为</strong><br><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/undefined"><strong>undefined</strong></a>。</p>
+<p><strong>描述符默认值汇总</strong></p>
+<ul>
+<li><p>  拥有布尔值的键 configurable、enumerable 和 writable 的默认值都是 false。</p>
+</li>
+<li><p>  属性值和函数的键 value、get 和 set 字段的默认值为 undefined。</p>
+</li>
+</ul>
+<p><strong>描述符可拥有的键值</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>configurable</th>
+<th>enumerable</th>
+<th>value</th>
+<th>writable</th>
+<th>get</th>
+<th>set</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数据描述符</td>
+<td>可以</td>
+<td>可以</td>
+<td>可以</td>
+<td>可以</td>
+<td>不可以</td>
+<td>不可以</td>
+</tr>
+<tr>
+<td>存取描述符</td>
+<td>可以</td>
+<td>可以</td>
+<td>不可以</td>
+<td>不可以</td>
+<td>可以</td>
+<td>可以</td>
+</tr>
+</tbody></table>
+<p>如果一个描述符不具有 value、writable、get 和 set<br>中的任意一个键，那么它将被认为是一个数据描述符。如果一个描述符同时拥有 value 或<br>writable 和 get 或 set 键，则会产生一个异常。</p>
+<p>记住，这些选项不一定是自身属性，也要考虑继承来的属性。为了确认保留这些默认值，在设置之前，可能要冻结<br>Object.prototype，明确指定所有的选项，或者通过 Object.create(null) 将<br><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/__proto__">_<em>proto</em>_</a><br>属性指向<br><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/null">null</a>。</p>
+<p>// 使用 __proto__var obj = {};var descriptor = Object.create(null); //<br>没有继承的属性// 默认没有 enumerable，没有 configurable，没有<br>writabledescriptor.value = ‘static’;Object.defineProperty(obj, ‘key’,<br>descriptor);// 显式Object.defineProperty(obj, “key”, {enumerable:<br>false,configurable: false,writable: false,value: “static”});//<br>循环使用同一对象function withValue(value) { var d = withValue.d ||<br>(withValue.d = {enumerable: false,writable: false,configurable: false,value:<br>null } );d.value = value; return d;}// … 并且 …Object.defineProperty(obj,<br>“key”, withValue(“static”));// 如果 freeze 可用,<br>防止后续代码添加或删除对象原型的属性// （value, get, set, enumerable, writable,<br>configurable）(Object.freeze||Object)(Object.prototype);</p>
+<p><strong>示例</strong></p>
+<p>如果你想了解如何使用 Object.defineProperty<br>方法和<em>类二进制标记</em>语法，可以看看这些<a target="_blank" rel="noopener" href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty/Additional_examples">额外示例</a>。</p>
+<p>创建属性</p>
+<p>如果对象中不存在指定的属性，Object.defineProperty()<br>会创建这个属性。当描述符中省略某些字段时，这些字段将使用它们的默认值。</p>
+<p>var o = {}; // 创建一个新对象//<br>在对象中添加一个属性与数据描述符的示例Object.defineProperty(o, “a”, { value :<br>37, writable : true, enumerable : true, configurable : true});// 对象 o<br>拥有了属性 a，值为 37// 在对象中添加一个设置了存取描述符属性的示例var bValue =<br>38;Object.defineProperty(o, “b”, { // 使用了方法名称缩写（ES2015 特性） //<br>下面两个缩写等价于： // get : function() { return bValue; }, // set :<br>function(newValue) { bValue = newValue; }, get() { return bValue; },<br>set(newValue) { bValue = newValue; }, enumerable : true, configurable :<br>true});o.b; // 38// 对象 o 拥有了属性 b，值为 38// 现在，除非重新定义 o.b，o.b<br>的值总是与 bValue 相同//<br>数据描述符和存取描述符不能混合使用Object.defineProperty(o, “conflict”, {value:<br>0x9f91102, get() { return 0xdeadbeef; } });// 抛出错误 TypeError: value appears<br>only in data descriptors, get appears only in accessor descriptors</p>
+<p>修改属性</p>
+<p>如果属性已经存在，Object.defineProperty()将尝试根据描述符中的值以及对象当前的配置来修改这个属性。如果旧描述符将其configurable<br>属性设置为false，则该属性被认为是“不可配置的”，并且没有属性可以被改变（除了单向改变<br>writable 为 false）。当属性不可配置时，不能在数据和访问器属性类型之间切换。</p>
+<p>当试图改变不可配置属性（除了 value 和 writable<br>属性之外）的值时，会抛出TypeError，除非当前值和新值相同。</p>
+<p><strong>Writable 属性</strong></p>
+<p>当 writable 属性设置为 false 时，该属性被称为“不可写的”。它不能被重新赋值。</p>
+<p>var o = {}; // 创建一个新对象Object.defineProperty(o, ‘a’, {value: 37,writable:<br>false});console.log(o.a); // logs 37o.a = 25; // No error thrown// (it would<br>throw in strict mode,// even if the value had been the same)console.log(o.a); //<br>logs 37. The assignment didn’t work.// strict mode(function() { ‘use strict’;<br>var o = {};Object.defineProperty(o, ‘b’, {value: 2,writable: false });o.b = 3;<br>// throws TypeError: “b” is read-only return o.b; // returns 2 without the line<br>above}());</p>
+<p>如示例所示，试图写入非可写属性不会改变它，也不会引发错误。</p>
+<p><strong>Enumerable 属性</strong></p>
+<p>enumerable 定义了对象的属性是否可以在<br><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/for...in">for…in</a><br>循环和 Object.keys() 中被枚举。</p>
+<p>var o = {};Object.defineProperty(o, “a”, { value : 1, enumerable: true<br>});Object.defineProperty(o, “b”, { value : 2, enumerable: false<br>});Object.defineProperty(o, “c”, { value : 3 }); // enumerable 默认为 falseo.d =<br>4; // 如果使用直接赋值的方式创建对象的属性，则 enumerable 为<br>trueObject.defineProperty(o, Symbol.for(‘e’), {value: 5,enumerable:<br>true});Object.defineProperty(o, Symbol.for(‘f’), {value: 6,enumerable:<br>false});for (var i in o) {console.log(i);}// logs ‘a’ and ‘d’ (in undefined<br>order)Object.keys(o); // [‘a’, ‘d’]o.propertyIsEnumerable(‘a’); //<br>trueo.propertyIsEnumerable(‘b’); // falseo.propertyIsEnumerable(‘c’); //<br>falseo.propertyIsEnumerable(‘d’); //<br>trueo.propertyIsEnumerable(Symbol.for(‘e’)); //<br>trueo.propertyIsEnumerable(Symbol.for(‘f’)); // falsevar p = { …o }p.a // 1p.b<br>// undefinedp.c // undefinedp.d // 4p[Symbol.for(‘e’)] // 5p[Symbol.for(‘f’)] //<br>undefined</p>
+<p><strong>Configurable 属性</strong></p>
+<p>configurable 特性表示对象的属性是否可以被删除，以及除 value 和 writable<br>特性外的其他特性是否可以被修改。</p>
+<p>var o = {};Object.defineProperty(o, ‘a’, { get() { return 1; },configurable:<br>false});Object.defineProperty(o, ‘a’, {configurable: true}); // throws a<br>TypeErrorObject.defineProperty(o, ‘a’, {enumerable: true}); // throws a<br>TypeErrorObject.defineProperty(o, ‘a’, { set() {}}); // throws a TypeError (set<br>was undefined previously)Object.defineProperty(o, ‘a’, { get() { return 1; }});<br>// throws a TypeError// (even though the new get does exactly the same<br>thing)Object.defineProperty(o, ‘a’, {value: 12}); // throws a TypeError //<br>(‘value’ can be changed when ‘configurable’ is false but not in this case due to<br>‘get’ accessor)console.log(o.a); // logs 1delete o.a; // Nothing<br>happensconsole.log(o.a); // logs 1</p>
+<p>如果 o.a 的 configurable 属性为<br>true，则不会抛出任何错误，并且，最后，该属性会被删除。</p>
+<p>添加多个属性和默认值</p>
+<p>考虑特性被赋予的默认特性值非常重要，通常，使用点运算符和 Object.defineProperty()<br>为对象的属性赋值时，数据描述符中的属性默认值是不同的，如下例所示。</p>
+<p>var o = {};o.a = 1;// 等同于：Object.defineProperty(o, “a”, {value: 1,writable:<br>true,configurable: true,enumerable: true});// 另一方面，Object.defineProperty(o,<br>“a”, { value : 1 });// 等同于：Object.defineProperty(o, “a”, {value: 1,writable:<br>false,configurable: false,enumerable: false});</p>
+<p>自定义 Setters 和 Getters</p>
+<p>下面的例子展示了如何实现一个自存档对象。当设置temperature 属性时，archive<br>数组会收到日志条目。</p>
+<p>function Archiver() { var temperature = null; var archive =<br>[];Object.defineProperty(this, ‘temperature’, { get: function()<br>{console.log(‘get!’); return temperature; }, set: function(value) { temperature<br>= value;archive.push({ val: temperature }); } }); this.getArchive = function() {<br>return archive; };}var arc = new Archiver();arc.temperature; //<br>‘get!’arc.temperature = 11;arc.temperature = 13;arc.getArchive(); // [{ val: 11<br>}, { val: 13 }]</p>
+<p>下面这个例子中，getter 总是会返回一个相同的值。</p>
+<p>var pattern = { get: function () { return ‘I alway return this string,whatever<br>you have assigned’; }, set: function () { this.myname = ‘this is my name<br>string’; }};function TestDefineSetAndGet() {Object.defineProperty(this,<br>‘myproperty’, pattern);}var instance = new<br>TestDefineSetAndGet();instance.myproperty = ‘test’;// ‘I alway return this<br>string,whatever you have assigned’console.log(instance.myproperty);// ‘this is<br>my name string’console.log(instance.myname);继承属性</p>
+<p>继承属性</p>
+<p>如果访问者的属性是被继承的，它的 get 和 set<br>方法会在子对象的属性被访问或者修改时被调用。如果这些方法用一个变量存值，该值会被所有对象共享。</p>
+<p>function myclass() {}var value;Object.defineProperty(myclass.prototype, “x”, {<br>get() { return value; }, set(x) { value = x; }});var a = new myclass();var b =<br>new myclass();a.x = 1;console.log(b.x); // 1</p>
+<p>这可以通过将值存储在另一个属性中解决。在 get 和 set 方法中，this<br>指向某个被访问和修改属性的对象。</p>
+<p>function myclass() {}Object.defineProperty(myclass.prototype, “x”, { get() {<br>return this.stored_x; }, set(x) { this.stored_x = x; }});var a = new<br>myclass();var b = new myclass();a.x = 1;console.log(b.x); // undefined</p>
+<p>不像访问者属性，值属性始终在对象自身上设置，而不是一个原型。然而，如果一个不可写的属性被继承，它仍然可以防止修改对象的属性。</p>
+<p>function myclass() {}myclass.prototype.x =<br>1;Object.defineProperty(myclass.prototype, “y”, {writable: false,value: 1});var<br>a = new myclass();a.x = 2;console.log(a.x); //<br>2console.log(myclass.prototype.x); // 1a.y = 2; // Ignored, throws in strict<br>modeconsole.log(a.y); // 1console.log(myclass.prototype.y); // 1</p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#js" >
+    <span class="tag-code">js</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/set%20get%20Vue%20(defineProperty)/">
+        <span class="nav-arrow">← </span>
+        
+          set get Vue (defineProperty)
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/$(window).load%20%E4%B8%8E%20$(window).ready%E5%8C%BA%E5%88%AB/">
+        
+          $(window).load 与 $(window).ready区别
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">若你觉得我的文章对你有帮助，欢迎点击上方按钮对我打赏</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo="gogHeroDream/blogTalks"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="nav">none</ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2021/09/02/前端学些心得/defineProperty/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2021 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

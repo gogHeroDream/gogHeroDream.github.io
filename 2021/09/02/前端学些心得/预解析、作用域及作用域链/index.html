@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="xiamo&#39;s blog">
+  <meta name="keyword" content="blog, hexo-theme, vuejs">
+  
+    <link rel="shortcut icon" href="/css/images/logo.png">
+  
+  <title>
+    
+      预解析、作用域及作用域链 | 日常随笔
+    
+  </title>
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+    
+<script src="/js/qrious.js"></script>
+
+  
+  
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+  
+    
+<script src="/js/local-search.js"></script>
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>日常随笔</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="/" class="item-link">Home</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/series" class="item-link">Series</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/tags" class="item-link">Tags</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/project" class="item-link">Projects</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/about" class="item-link">About</a>
+          
+        </li>
+      
+      
+        <li class="menu-item menu-item-search right-list">
+    <a role="button" class="popup-trigger">
+        <i class="fa fa-search fa-fw"></i>
+    </a>
+</li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="/" class="menu-link">Home</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/series" class="menu-link">Series</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/tags" class="menu-link">Tags</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/project" class="menu-link">Projects</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/about" class="menu-link">About</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+    
+      <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+            <span class="search-icon">
+                <i class="fa fa-search"></i>
+            </span>
+            <div class="search-input-container">
+                <input autocomplete="off" autocapitalize="off"
+                    placeholder="Please enter your keyword(s) to search." spellcheck="false"
+                    type="search" class="search-input">
+            </div>
+            <span class="popup-btn-close">
+                <i class="fa fa-times-circle"></i>
+            </span>
+        </div>
+        <div id="search-result">
+            <div id="no-result">
+                <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+            </div>
+        </div>
+    </div>
+</div>
+    
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>预解析、作用域及作用域链</h2>
+  <p class="post-date">2021-09-02</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p><strong>JS 预解析</strong></p>
+<p><strong>1.</strong> 代码执行前先预解析，先找关键字， var、function 将呢些变量<br>“提前”到外部脚本或外部函数作用域的顶部（先开辟内存空间）。</p>
+<p><strong>2.</strong> var 和 function <strong>同名时</strong>，<strong>以function</strong><br><strong>的优先级更高（存在多个函数重名，取最后一个）</strong></p>
+<p><strong>3.</strong> <strong>以表达式声明的</strong> <strong>函数</strong> <strong>只是</strong> <strong>var</strong> ‘<strong>变量</strong>‘<br><strong>会</strong>“<strong>被提前</strong>” <strong>而给变量的赋值</strong><br><strong>不会提前即以表达式方式定义的函数在定义之前无法调用</strong>。</p>
+<p><strong>4.</strong> 函数作用域 在执行的时候 如上 也适用。</p>
+<p>亦叫做预编译</p>
+<p>JavaScript中, 是有预编译的过程的, Javascript在执行每一段Javascript代码之前,<br>都会首先处理var关键字和function定义式(函数定义式和函数表达式).</p>
+<p>在调用函数执行之前, 会首先创建一个活动对象,<br>然后搜寻这个函数中的局部变量定义,和函数定义,<br>将变量名和函数名都做为这个活动对象的同名属性,<br>对于局部变量定义,变量的值会在真正执行的时候才计算, 此时只是简单的赋为undefined.</p>
+<p><strong>例如</strong>：</p>
+<p><img src="/css/images/media/8ca420f20da03bb798655095064d2ce7.png" alt="clipboard.png"></p>
+<p>上面总体顺序是：</p>
+<p>1： 预解析（找关键字 var、function） 提前 变量 c （第2行）和 ab （第3行）<br>（undefined）</p>
+<p>2: 执行第 1 行 console // 这里是 undefined</p>
+<p>3： 执行第 3 行 ab的赋值 // 这里只执行 ab=?<br>的赋值，（跳过声明，因为预解析阶段已经执行过了）</p>
+<p>4： 执行第 4 行的console // 这里是 f() { }</p>
+<p><strong>再例如</strong>：</p>
+<p><img src="/css/images/media/cdae428a3c26bfb0bc8b5f78a3458010.png" alt="clipboard.png"></p>
+<p>总体顺序是：</p>
+<p>1： 先预解析（找关键字 var、function） 提前 变量 ab （第2行）和 ab （第3行<br>函数体） 和ab(第4行)</p>
+<p>2: 执行第 1 行 console // 这里是 ƒ ab() {}</p>
+<p>3： 执行第 2 行 ab的赋值 // 这里只执行 ab=? 的赋值， 这里赋值ab 为<br>1（跳过声明，因为预解析阶段已经执行过了）</p>
+<p>4： 执行第 4 行 ab的赋值 // 这里只执行 ab=? 的赋值， 这里赋值ab 为<br>2（跳过声明，因为预解析阶段已经执行过了）</p>
+<p>5： 执行第 5 行的console // 这里是 2</p>
+<p><strong>JS 作用域及作用域链</strong></p>
+<p><strong>一、作用域</strong></p>
+<p>在 Javascript 中，作用域分为 <strong>全局作用域</strong> 和 <strong>函数作用域</strong></p>
+<p><strong>全局作用域：</strong></p>
+<p>代码在程序的任何地方都能被访问，window 对象的内置属性都拥有全局作用域。</p>
+<p><strong>函数作用域：</strong></p>
+<p>在固定的代码片段才能被访问</p>
+<p>例子：</p>
+<p><img src="/css/images/media/d9413b41b66128c9f107f17ccb5973b4.png" alt="708372951952.png"></p>
+<p>作用域有上下级关系，上下级关系的确定就看函数是在哪个作用域下创建的。如上，fn作用域下创建了bar函数，那么“fn作用域”就是“bar作用域”的上级。</p>
+<p>作用域最大的用处就是隔离变量，不同作用域下同名变量不会有冲突。</p>
+<p>变量取值：<strong>到创建 这个变量 的函数的作用域中取值</strong></p>
+<p><strong>二、作用域链</strong></p>
+<p><strong>一般情况下，变量取值到 创建 这个变量 的函数的作用域中取值。</strong></p>
+<p><strong>但是如果在当前作用域中没有查到值，就会向上级作用域去查，直到查到全局作用域，这么一个查找过程形成的链条就叫做作用域链。</strong></p>
+<p><img src="/css/images/media/51e409b11aa51c150090697429a953ed.gif" alt="copycode.gif"></p>
+<p>var x = 10; function fn(){ console.log(x); } function show(f){ var x = 20;<br>(function(){ f(); // 10})() } show(fn);</p>
+<p><img src="/css/images/media/51e409b11aa51c150090697429a953ed.gif" alt="copycode.gif"></p>
+<p><img src="/css/images/media/9cc842278af68b0da1f27b1d2a0c9e7d.png" alt="448515607115.png"></p>
+<p><img src="/css/images/media/013b8c886ef0376d98d2a0800494a9a4.png" alt="clipboard.png"></p>
+<p>上面的ab 是局部变量，只在 fnScope 这个作用域内生效，外面没有，所以报错。</p>
+<p><img src="/css/images/media/bbe9db28ee0ef0df72c32f1aac3b24e6.png" alt="clipboard.png"></p>
+<p><img src="/css/images/media/393f7b81743ed04237dbfed1afd4f58a.png" alt="clipboard.png"></p>
+<p>形参也是先创建局部变量，作为活动对象的参数。和实参没关系，只是复制了下实参的值，（对象传递的话，更改属性会有关系，实参也会变，址传递）</p>
+<p><img src="/css/images/media/2cd9bdcc8289ca6295239b24f00e8192.png" alt="clipboard.png"></p>
+<p><img src="/css/images/media/93f3a50ecc213d7bbcd3d871087e8c36.png" alt="clipboard.png"></p>
+<p>图例如下：</p>
+<p><img src="/css/images/media/29ee9c552693d0a93f081a9a5488ff82.png" alt="clipboard.png"></p>
+<p>实参为对象时：</p>
+<p><img src="/css/images/media/8cd951a9d26caa01814d26a41105d012.png" alt="clipboard.png"></p>
+<p>上面代码在执行函数的时候，先预解析，给ab变量分配内存空间，作为活动对象的参数，形参也分配，由于活动对象上有该参数了（同名），这里就直接赋值实参了，（实参是个对象，也就是说这里是址传递，复制到活动对象的ab属性上，然而ab<br>又被赋值给了1，所以这里就和原实参没有任何关系了）</p>
+<p>总体顺序为：</p>
+<p>外部： 先预解析 提前 ab fn, 然后执行赋值ab fn()运行 打印ab 的过程</p>
+<p>fn()内部： 先预解析 ab 作为活动对象的参数 此时为 undefined</p>
+<p>在把实参 赋给形参 ab(活动对象的变量（局部变量）);</p>
+<p>在 打印 ab (此时为{k:1}) , 然后 赋值 ab 在打印ab (此时为1)</p>
+<p><img src="/css/images/media/0dcdf6476314c591e646e2a7a873afc8.png" alt="clipboard.png"></p>
+<p>这里同上， fn()中 没有对 ab声明，不过形参相当于也是 var了一下，挂到了<br>活动对象上，就有这个局部参数了。</p>
+<p><img src="/css/images/media/a860dc1990b212d7a3e7114fd86c92cc.png" alt="clipboard.png"></p>
+<p>上面更改的是 传递参数的 属性，由于是址传递 会影响到原 实参的值。</p>
+<p>如果对ab 是 直接赋值 某个数或者字符串 亦或者 是 个 对象 数组<br>（只要不是更改ab的属性） 就不会在和 原参数 产生关系了， 比如 直接赋值 ab= 1<br>true, “abc” ,{a:123} 函数内部的ab 会被赋值， 而外部的 ab不会受到影响。</p>
+<p><img src="/css/images/media/10480ad184e6b9f50531b894456ae4a2.png" alt="clipboard.png"></p>
+<p>知识扩展：</p>
+<p>1. 作用域（scope）指的是变量存在的范围。在 ES5 的规范中，Javascript<br>只有两种作用域：一种是全局作用域，变量在整个程序中一直存在，所有地方都可以读取；另一种是函数作用域，变量只在函数内部存在。ES6<br>又新增了块级作用域。</p>
+<p>2.<br>对于var命令来说，局部变量只能在函数内部声明，在其他区块中声明，一律都是全局变量。</p>
+<p>if (true) { var x = 5; }console.log(x); // 5</p>
+<p>3. 函数的同名参数</p>
+<p>如果有同名的参数，则取最后出现的那个值。</p>
+<p>function f(a, a) { console.log(a); }f(1, 2) // 2</p>
+<p>上面代码中，函数f有两个参数，且参数名都是a。取值的时候，以后面的a为准，即使后面的a没有值或被省略，也是以其为准</p>
+<p>function f(a, a) { console.log(a); }f(1) // undefined</p>
+<p>调用函数f的时候，没有提供第二个参数，a的取值就变成了undefined。这时，如果要获得第一个a的值，可以使用arguments对象。</p>
+<p>function f(a, a) { console.log(arguments[0]); }f(1) // 1</p>
+<p>4. JS 执行环境（EC），变量对象（VO），活动对象（AO），作用域链（scope chain）</p>
+<p>详见： <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/82691a18562d">https://www.jianshu.com/p/82691a18562d</a></p>
+</section>
+    <!-- Tags START -->
+    
+      <div class="tags">
+        <span>Tags:</span>
+        
+  <a href="/tags#js" >
+    <span class="tag-code">js</span>
+  </a>
+
+      </div>
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/2021/08/27/gitignore%E6%97%A0%E6%95%88/">
+        <span class="nav-arrow">← </span>
+        
+          修改.gitignore文件后不起作用/不生效问题
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/%E9%A1%B5%E9%9D%A2%E4%BC%98%E5%8C%96/">
+        
+          页面优化
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+      <div class="money-like">
+        <div class="reward-btn">
+          赏
+          <span class="money-code">
+            <span class="alipay-code">
+              <div class="code-image"></div>
+              <b>使用支付宝打赏</b>
+            </span>
+            <span class="wechat-code">
+              <div class="code-image"></div>
+              <b>使用微信打赏</b>
+            </span>
+          </span>
+        </div>
+        <p class="notice">若你觉得我的文章对你有帮助，欢迎点击上方按钮对我打赏</p>
+      </div>
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+      <div class="qrcode">
+        <canvas id="share-qrcode"></canvas>
+        <p class="notice">扫描二维码，分享此文章</p>
+      </div>
+    
+    <!-- 二维码 END -->
+    
+      <!-- Utterances START -->
+      <div id="utterances"></div>
+      <script src="https://utteranc.es/client.js"
+        repo="gogHeroDream/blogTalks"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async></script>    
+      <!-- Utterances END -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+    <aside class="catalog-container">
+  <div class="toc-main">
+    <strong class="toc-title">Catalog</strong>
+    
+      <ol class="nav">none</ol>
+    
+  </div>
+</aside>
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://example.com/2021/09/02/前端学些心得/预解析、作用域及作用域链/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    } else {
+      $('#article-banner').geopattern(url)
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', '/css/images/error_icon.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== '/css/images/error_icon.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+
+  <script>
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+  </script>
+
+
+
+
+
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2021 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    <br>
+    Theme by <a target="_blank" rel="noopener" href="https://github.com/yanm1ng">yanm1ng</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      hljs.configure({useBR: true});
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

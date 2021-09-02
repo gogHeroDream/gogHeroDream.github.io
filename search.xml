@@ -1,0 +1,1136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>修改.gitignore文件后不起作用/不生效问题</title>
+    <url>/2021/08/27/gitignore%E6%97%A0%E6%95%88/</url>
+    <content><![CDATA[<h2 id="修改-gitignore文件后不起作用-不生效问题"><a href="#修改-gitignore文件后不起作用-不生效问题" class="headerlink" title="修改.gitignore文件后不起作用/不生效问题"></a>修改.gitignore文件后不起作用/不生效问题</h2><blockquote>
+<p>当我们更新了gitignore后，当我们想push文件的时候，我们声明的忽略文件还是会出现在push的目录中</p>
+</blockquote>
+<blockquote>
+<p>原因： 是.gitignore只能忽略那些原来没有被track的文件，如果某些文件已经被跟踪了，则修改.gitignore是无效的。</p>
+</blockquote>
+<h4 id="法一：取消跟踪-但会删除仓库忽略文件"><a href="#法一：取消跟踪-但会删除仓库忽略文件" class="headerlink" title="法一：取消跟踪 但会删除仓库忽略文件"></a>法一：取消跟踪 但会删除仓库忽略文件</h4><p>把要忽略的文件改为未track状态。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">#方法一：取消跟踪所有文件，但不删除本地文件</span><br><span class="line">git rm -r --cached . 　　</span><br><span class="line">#方法二：取消某个文件file.txt的跟踪，但不删除本地文件</span><br><span class="line">git rm --cached file.txt</span><br><span class="line"></span><br><span class="line"><span class="comment">// 法一 具体为</span></span><br><span class="line">git rm -r --cached .　　　　　　　　删除缓存</span><br><span class="line">git add .　　　　　　  　　　　　　添加要提交的文件</span><br><span class="line">git commit -m <span class="string">&quot;Update .gitignore&quot;</span>　　提交</span><br><span class="line">git push　　　　　　　　　　　　  推送</span><br><span class="line"></span><br><span class="line"><span class="comment">// 法二 具体为</span></span><br><span class="line">git rm --cached abc.txt 删除仓库某跟踪文件(例如abc.txt)，自己本地的不会删除，仓库内会删除</span><br><span class="line">git add .　　　　　　  　　　　　　添加要提交的文件</span><br><span class="line">git commit -m <span class="string">&quot;Update .gitignore&quot;</span>　　提交</span><br><span class="line">git push　　　　　　　　　　　　  推送</span><br></pre></td></tr></table></figure>
+
+<h4 id="法二：加入不提交队列"><a href="#法二：加入不提交队列" class="headerlink" title="法二：加入不提交队列"></a>法二：加入不提交队列</h4><p>.gitignore 和 excludes</p>
+<p>这两个文件的只针对尚未提交到配置库的文件才起作用。而对于已经提交的文件是不起作用的。<br>由此可见，这两个文件的初衷是用于排除不希望上传入库的文件。像编译产生的临时文件等。</p>
+<p>但是，我们经常有这样一种情况。<br>有个文件，我们必须入库，大家一起共享，但是呢。每个人本地的配置又是因自己本地的环境而异。这样的话，这个文件就很崩溃了。你要入库，通过.gitignore和excludes都不起作用。每次git status都会提示你修改，你又好上传。</p>
+<p>对于这种情况，应该使用下面的命令：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">git update-index --assume-unchanged FILENAME</span><br></pre></td></tr></table></figure>
+<p>这样，每个人，从库上取代码后，在自己本地都要执行一下上面的这个命令。这样，以后，你这个文件的修改，git 都会帮你忽略掉。</p>
+<p>当然，哪一天，你希望你的修改要提交入库，那你也必须手动修改一下 这个文件的标志位：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">git update-index --no-assume-unchanged FILENAME</span><br></pre></td></tr></table></figure>
+<p>所以。<br>我们总结一下，总的流程：还是像你平常一样，需要入库，全部commit 提交，push。然后，由于这个文件你本地的配置跟别人不一样，你需要修改它，但不需要入库与别人共享。那么你就执行上面的 git update-index –assume-unchanged 命令来忽略你本地对它的修改。</p>
+]]></content>
+      <tags>
+        <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2021/02/01/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/writing.html">Writing</a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/server.html">Server</a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/generating.html">Generating</a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
+<p>More info: <a href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+]]></content>
+      <tags>
+        <tag>xuexi</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>border 的骚操作 css 画三角形</title>
+    <url>/2021/09/02/border%20%E7%9A%84%E9%AA%9A%E6%93%8D%E4%BD%9C%20%20css%20%E7%94%BB%E4%B8%89%E8%A7%92%E5%BD%A2/</url>
+    <content><![CDATA[<p>border-width: 50px 18px 50px 38px;</p>
+<p>border-style: solid;</p>
+<p>border-color: red green yellow pink;</p>
+<p>四个参数 都是 上 右 下 左</p>
+<p><img src="/css/images/media/bd7c202b66ce65a45dbc69e31275b061.png" alt="clipboard.png"></p>
+<p>三个参数 上 （左右） 下</p>
+<p><img src="/css/images/media/619368d08ecb5d6a0a06714a34d42f2f.png" alt="clipboard.png"></p>
+<p>两个就是 （上下） （左右）</p>
+<p><img src="/css/images/media/c11ad46a4f3bdbe4305cb548148ee757.png" alt="clipboard.png"></p>
+<p><img src="/css/images/media/affe4755dc2d5af99f0111cea088bc53.png" alt="clipboard.png"></p>
+<p>进阶： 五边形对话框 （快速提问）</p>
+<p>&lt;div @click=”isAddDialogShow= true”<br>@mouseenter=”($event)=&gt;{$event.target.classList.<strong>add</strong>(‘question-hover’)}”<br>@mouseleave=”($event)=&gt;{$event.target.classList.<strong>remove</strong>(‘question-hover’)}”<br>class=”question-body flex-center”&gt;</p>
+<p>&lt;i class=”el-icon-edit” style=”font-size:20px;color: #aaa;”&gt;&lt;/i&gt;</p>
+<p>&lt;p class=”flex-center ask-questions flex-column” style=”margin-bottom: 0;”&gt;</p>
+<p>&lt;span class=”d-flex flex-1 question-text”&gt;我&nbsp;要&lt;/span&gt;</p>
+<p>&lt;span class=”d-flex flex-1 question-text”&gt;提&nbsp;问&lt;/span&gt;</p>
+<p>&lt;/p&gt;</p>
+<p>&lt;/div&gt;</p>
+<p>// before after 伪类部分重点</p>
+<p>.d-flex{</p>
+<p>display: flex;</p>
+<p>}</p>
+<p>.flex-center{</p>
+<p>display:flex;</p>
+<p>align-items: center;</p>
+<p>justify-content:center;</p>
+<p>}</p>
+<p>.flex-1{</p>
+<p>flex:1;</p>
+<p>}</p>
+<p>.flex-column {</p>
+<p>flex-direction: column;</p>
+<p>}</p>
+<p>.question-body{</p>
+<p>cursor: pointer;</p>
+<p>position: fixed;</p>
+<p>bottom:30px;</p>
+<p>right:10px;</p>
+<p>width:50px;</p>
+<p>height:35px;</p>
+<p>padding:2px;</p>
+<p>background-color: <em>#FFFFFF</em>;</p>
+<p>border: <em>#cccccc</em> solid 1px;</p>
+<p>border-radius: 3px;</p>
+<p>&amp;.question-hover{</p>
+<p>background: <em>#99e51c</em>;</p>
+<p>color: <em>#fff</em>;</p>
+<p>.el-icon-edit{</p>
+<p>display: none;</p>
+<p>}</p>
+<p>.ask-questions{</p>
+<p>display: flex;</p>
+<p>}</p>
+<p>&amp;::before{</p>
+<p>border-top:8px solid <em>#99e51c</em>;</p>
+<p>}</p>
+<p>}</p>
+<p>.el-icon-edit{</p>
+<p>display: block;</p>
+<p>}</p>
+<p>.ask-questions{</p>
+<p>display: none;</p>
+<p>height: 100%;</p>
+<p>width: 100%;</p>
+<p>.question-text{</p>
+<p>font-size: 12px;</p>
+<p>height:50%;</p>
+<p>line-height: 12px;</p>
+<p>align-items: center;</p>
+<p>}</p>
+<p>}</p>
+<p>&amp;::before{</p>
+<p>box-sizing: content-box;</p>
+<p>width: 0px;</p>
+<p>height: 0px;</p>
+<p>position: absolute;</p>
+<p>bottom: -16px;;</p>
+<p>left:0px;</p>
+<p>padding:0;</p>
+<p>border-top:8px solid <em>#FFFFFF</em>;</p>
+<p>border-bottom:8px solid transparent;</p>
+<p>// border-left:8px solid transparent;</p>
+<p>border-right:8px solid transparent;</p>
+<p>display: block;</p>
+<p>content:’’;</p>
+<p>z-index: 12;</p>
+<p>}</p>
+<p>&amp;::after{</p>
+<p>box-sizing: content-box;</p>
+<p>width: 0px;</p>
+<p>height: 0px;</p>
+<p>position: absolute;</p>
+<p>bottom: -18px;</p>
+<p>left:-1px;</p>
+<p>padding:0;</p>
+<p>border-top:9px solid <em>#cccccc</em>;</p>
+<p>border-bottom:9px solid transparent;</p>
+<p>// border-left:9px solid transparent;</p>
+<p>border-right:12px solid transparent;</p>
+<p>display: block;</p>
+<p>content:’’;</p>
+<p>z-index:10</p>
+<p>}</p>
+<p>}</p>
+<p><img src="/css/images/media/774c20ece6259a004d0b306e8aeb9ed7.png" alt="clipboard.png"></p>
+<p><img src="/css/images/media/fd6505d81312ead71c1dc4e66420ffc8.png" alt="clipboard.png"></p>
+]]></content>
+      <tags>
+        <tag>html</tag>
+        <tag>css</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>array方法</title>
+    <url>/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/array%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p><strong>flat / flatMap</strong></p>
+<p>数组的成员有时还是数组，Array.prototype.flat()用于将嵌套的数组“拉平”，变成一维数组。该方法返回一个新数组，对原数据没有影响。</p>
+<p>[1, 2, [3, 4]].flat() // [1, 2, 3, 4]</p>
+<p>上面代码中，原数组的成员里面有一个数组，flat()方法将子数组的成员取出来，添加在原来的位置。</p>
+<p>flat()默认只会“拉平”一层，如果想要“拉平”多层的嵌套数组，可以将flat()方法的参数写成一个整数，表示想要拉平的层数，默认为1。</p>
+<p>[1, 2, [3, [4, 5]]].flat() // [1, 2, 3, [4, 5]] [1, 2, [3, [4, 5]]].flat(2) //<br>[1, 2, 3, 4, 5]</p>
+<p>[1, 2, {“0”:123}, [3, [4, 5]]].flat(2)</p>
+<p>//[1, 2, {0: 123}, 3, 4, 5] //伪数组没用，只拉数组 （Set, Map 等数据结构同理）</p>
+<p>上面代码中，flat()的参数为2，表示要拉平两层的嵌套数组。</p>
+<p>如果不管有多少层嵌套，都要转成一维数组，可以用Infinity关键字作为参数。</p>
+<p>[1, [2, [3]]].flat(Infinity) // [1, 2, 3]</p>
+<p>如果原数组有空位，flat()方法会跳过空位。</p>
+<p>[1, 2, , 4, 5].flat() // [1, 2, 4, 5]</p>
+<p>flatMap()方法对原数组的每个成员执行一个函数，相当于执行Array.prototype.map(),然后对返回值组成的数组执行flat()方法。该方法返回一个新数组，不改变原数组。</p>
+<p>// 相当于 [[2, 4], [3, 6], [4, 8]].flat() [2, 3, 4].flatMap((x) =&gt; [x, x * 2])<br>// [2, 4, 3, 6, 4, 8]</p>
+<p>flatMap()只能展开一层数组。</p>
+<p><strong>reduce</strong></p>
+<p>reduce()<br>方法接收一个函数作为累加器，数组中的每个值（从左到右）开始缩减，最终计算为一个值。</p>
+<p>reduce() 可以作为一个高阶函数，用于函数的 compose。</p>
+<p><strong>注意:</strong> reduce() 对于空数组是不会执行回调函数的。</p>
+<p>实例1 ：</p>
+<p>var numbers = [65, 44, 12, 4];function getSum(total, num) { return total +<br>num;}function myFunction(item) { document.getElementById(“demo”).innerHTML =<br>numbers.reduce(getSum);}</p>
+<p>//输出 125</p>
+<p>语法为：</p>
+<p>array.reduce(function(total, currentValue, currentIndex, arr), initialValue)</p>
+<p><strong>参数</strong></p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><em>function(total,currentValue, index,arr)</em></td>
+<td>必需。用于执行每个数组元素的函数。 函数参数:</td>
+</tr>
+<tr>
+<td><em>initialValue</em></td>
+<td>可选。传递给函数的初始值</td>
+</tr>
+<tr>
+<td>参数</td>
+<td>描述</td>
+</tr>
+<tr>
+<td><em>total</em></td>
+<td>必需。<em>初始值</em>, 或者计算结束后的返回值。</td>
+</tr>
+<tr>
+<td><em>currentValue</em></td>
+<td>必需。当前元素</td>
+</tr>
+<tr>
+<td><em>currentIndex</em></td>
+<td>可选。当前元素的索引</td>
+</tr>
+<tr>
+<td><em>arr</em></td>
+<td>可选。当前元素所属的数组对象。</td>
+</tr>
+</tbody></table>
+<p><strong>实例2</strong></p>
+<p>四舍五入后计算数组元素的总和：</p>
+<p>&lt;button onclick=”myFunction()”&gt;点我&lt;/button&gt;&lt;p&gt;数组元素之和: &lt;span<br>id=”demo”&gt;&lt;/span&gt;&lt;/p&gt;&lt;script&gt;var numbers = [15.5, 2.3, 1.1, 4.7];<br>function getSum(total, num) { return total + Math.round(num); } function<br>myFunction(item) { document.getElementById(“demo”).innerHTML =<br>numbers.reduce(getSum, 0); }&lt;/script&gt;</p>
+<p>输出 24</p>
+]]></content>
+      <tags>
+        <tag>js</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>$(window).load 与 $(window).ready区别</title>
+    <url>/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/$(window).load%20%E4%B8%8E%20$(window).ready%E5%8C%BA%E5%88%AB/</url>
+    <content><![CDATA[<p><img src="/css/images/media/81fe20a8b0c6afffcefcff137402ecbd.png" alt="clipboard.png"></p>
+]]></content>
+      <tags>
+        <tag>html</tag>
+        <tag>js</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>defineProperty</title>
+    <url>/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/defineProperty/</url>
+    <content><![CDATA[<p><strong>语法</strong></p>
+<p>Object.defineProperty(obj, prop, descriptor)</p>
+<p>直接在一个对象上定义一个新属性，或者修改一个对象的现有属性，并返回此对象。</p>
+<p>eg:</p>
+<p>const object1 = {a: 7};</p>
+<p>Object.<strong>defineProperty</strong>(object1, ‘a’, {</p>
+<p>value: 42,</p>
+<p>writable: false //false 不可写 即只读</p>
+<p>});</p>
+<p>Object.<strong>defineProperty</strong>(object1, ‘b’, {</p>
+<p>value: 2</p>
+<p>});</p>
+<p>object1.a = 77; //这里改不掉， 描述里已经设置不可更改（只读）</p>
+<p>console.<strong>log</strong>(object1); // {a: 42, b: 2}</p>
+<p><strong>描述</strong></p>
+<p>该方法允许精确地添加或修改对象的属性。通过赋值操作添加的普通属性是可枚举的，在枚举对象属性时会被枚举到（<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/for...in">for…in</a><br>或 Object.keys<br><a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys">https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/keys</a>方法），可以改变这些属性的值，也可以删除这些属性。这个方法允许修改默认的额外选项（或配置）。默认情况下，使用<br>Object.defineProperty() 添加的属性值是不可修改（immutable）的。</p>
+<p>对象里目前存在的属性描述符有两种主要形式：<em>数据描述符</em>和<em>存取描述符</em>。<em>数据描述符</em>是一个具有值的属性，该值可以是可写的，也可以是不可写的。<em>存取描述符</em>是由<br>getter 函数和 setter<br>函数所描述的属性。一个描述符只能是这两者其中之一；不能同时是两者。</p>
+<p>这两种描述符都是对象。它们共享以下可选键值（默认值是指在使用<br>Object.defineProperty() 定义属性时的默认值）：</p>
+<p><strong>configurable</strong></p>
+<p>当且仅当该属性的 configurable 键值为 true<br>时，该属性的描述符才能够被改变，同时该属性也能从对应的对象上被删除。</p>
+<p><strong>默认为 false</strong>。</p>
+<p><strong>enumerable</strong></p>
+<p>当且仅当该属性的 enumerable 键值为 true 时，该属性才会出现在对象的枚举属性中。</p>
+<p><strong>默认为 false</strong>。</p>
+<p>数据描述符还具有以下可选键值：</p>
+<p><strong>value</strong></p>
+<p>该属性对应的值。可以是任何有效的 JavaScript 值（数值，对象，函数等）。</p>
+<p><strong>默认为</strong><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/undefined"><strong>undefined</strong></a>。</p>
+<p><strong>writable</strong></p>
+<p>当且仅当该属性的 writable 键值为 true 时，属性的值，也就是上面的<br>value，才能被赋值运算符改变。</p>
+<p><strong>默认为 false。</strong></p>
+<p>存取描述符还具有以下可选键值：</p>
+<p><strong>get</strong></p>
+<p>属性的 getter 函数，如果没有 getter，则为<br>undefined。当访问该属性时，会调用此函数。执行时不传入任何参数，但是会传入 this<br>对象（由于继承关系，这里的this并不一定是定义该属性的对象）。该函数的返回值会被用作属性的值。</p>
+<p><strong>默认为</strong><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/undefined"><strong>undefined</strong></a>。</p>
+<p><strong>set</strong></p>
+<p>属性的 setter 函数，如果没有 setter，则为<br>undefined。当属性值被修改时，会调用此函数。该方法接受一个参数（也就是被赋予的新值），会传入赋值时的<br>this 对象。</p>
+<p><strong>默认为</strong><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/undefined"><strong>undefined</strong></a>。</p>
+<p><strong>描述符默认值汇总</strong></p>
+<ul>
+<li><p>  拥有布尔值的键 configurable、enumerable 和 writable 的默认值都是 false。</p>
+</li>
+<li><p>  属性值和函数的键 value、get 和 set 字段的默认值为 undefined。</p>
+</li>
+</ul>
+<p><strong>描述符可拥有的键值</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>configurable</th>
+<th>enumerable</th>
+<th>value</th>
+<th>writable</th>
+<th>get</th>
+<th>set</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>数据描述符</td>
+<td>可以</td>
+<td>可以</td>
+<td>可以</td>
+<td>可以</td>
+<td>不可以</td>
+<td>不可以</td>
+</tr>
+<tr>
+<td>存取描述符</td>
+<td>可以</td>
+<td>可以</td>
+<td>不可以</td>
+<td>不可以</td>
+<td>可以</td>
+<td>可以</td>
+</tr>
+</tbody></table>
+<p>如果一个描述符不具有 value、writable、get 和 set<br>中的任意一个键，那么它将被认为是一个数据描述符。如果一个描述符同时拥有 value 或<br>writable 和 get 或 set 键，则会产生一个异常。</p>
+<p>记住，这些选项不一定是自身属性，也要考虑继承来的属性。为了确认保留这些默认值，在设置之前，可能要冻结<br>Object.prototype，明确指定所有的选项，或者通过 Object.create(null) 将<br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/__proto__">_<em>proto</em>_</a><br>属性指向<br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/null">null</a>。</p>
+<p>// 使用 __proto__var obj = {};var descriptor = Object.create(null); //<br>没有继承的属性// 默认没有 enumerable，没有 configurable，没有<br>writabledescriptor.value = ‘static’;Object.defineProperty(obj, ‘key’,<br>descriptor);// 显式Object.defineProperty(obj, “key”, {enumerable:<br>false,configurable: false,writable: false,value: “static”});//<br>循环使用同一对象function withValue(value) { var d = withValue.d ||<br>(withValue.d = {enumerable: false,writable: false,configurable: false,value:<br>null } );d.value = value; return d;}// … 并且 …Object.defineProperty(obj,<br>“key”, withValue(“static”));// 如果 freeze 可用,<br>防止后续代码添加或删除对象原型的属性// （value, get, set, enumerable, writable,<br>configurable）(Object.freeze||Object)(Object.prototype);</p>
+<p><strong>示例</strong></p>
+<p>如果你想了解如何使用 Object.defineProperty<br>方法和<em>类二进制标记</em>语法，可以看看这些<a href="https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object/defineProperty/Additional_examples">额外示例</a>。</p>
+<p>创建属性</p>
+<p>如果对象中不存在指定的属性，Object.defineProperty()<br>会创建这个属性。当描述符中省略某些字段时，这些字段将使用它们的默认值。</p>
+<p>var o = {}; // 创建一个新对象//<br>在对象中添加一个属性与数据描述符的示例Object.defineProperty(o, “a”, { value :<br>37, writable : true, enumerable : true, configurable : true});// 对象 o<br>拥有了属性 a，值为 37// 在对象中添加一个设置了存取描述符属性的示例var bValue =<br>38;Object.defineProperty(o, “b”, { // 使用了方法名称缩写（ES2015 特性） //<br>下面两个缩写等价于： // get : function() { return bValue; }, // set :<br>function(newValue) { bValue = newValue; }, get() { return bValue; },<br>set(newValue) { bValue = newValue; }, enumerable : true, configurable :<br>true});o.b; // 38// 对象 o 拥有了属性 b，值为 38// 现在，除非重新定义 o.b，o.b<br>的值总是与 bValue 相同//<br>数据描述符和存取描述符不能混合使用Object.defineProperty(o, “conflict”, {value:<br>0x9f91102, get() { return 0xdeadbeef; } });// 抛出错误 TypeError: value appears<br>only in data descriptors, get appears only in accessor descriptors</p>
+<p>修改属性</p>
+<p>如果属性已经存在，Object.defineProperty()将尝试根据描述符中的值以及对象当前的配置来修改这个属性。如果旧描述符将其configurable<br>属性设置为false，则该属性被认为是“不可配置的”，并且没有属性可以被改变（除了单向改变<br>writable 为 false）。当属性不可配置时，不能在数据和访问器属性类型之间切换。</p>
+<p>当试图改变不可配置属性（除了 value 和 writable<br>属性之外）的值时，会抛出TypeError，除非当前值和新值相同。</p>
+<p><strong>Writable 属性</strong></p>
+<p>当 writable 属性设置为 false 时，该属性被称为“不可写的”。它不能被重新赋值。</p>
+<p>var o = {}; // 创建一个新对象Object.defineProperty(o, ‘a’, {value: 37,writable:<br>false});console.log(o.a); // logs 37o.a = 25; // No error thrown// (it would<br>throw in strict mode,// even if the value had been the same)console.log(o.a); //<br>logs 37. The assignment didn’t work.// strict mode(function() { ‘use strict’;<br>var o = {};Object.defineProperty(o, ‘b’, {value: 2,writable: false });o.b = 3;<br>// throws TypeError: “b” is read-only return o.b; // returns 2 without the line<br>above}());</p>
+<p>如示例所示，试图写入非可写属性不会改变它，也不会引发错误。</p>
+<p><strong>Enumerable 属性</strong></p>
+<p>enumerable 定义了对象的属性是否可以在<br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/for...in">for…in</a><br>循环和 Object.keys() 中被枚举。</p>
+<p>var o = {};Object.defineProperty(o, “a”, { value : 1, enumerable: true<br>});Object.defineProperty(o, “b”, { value : 2, enumerable: false<br>});Object.defineProperty(o, “c”, { value : 3 }); // enumerable 默认为 falseo.d =<br>4; // 如果使用直接赋值的方式创建对象的属性，则 enumerable 为<br>trueObject.defineProperty(o, Symbol.for(‘e’), {value: 5,enumerable:<br>true});Object.defineProperty(o, Symbol.for(‘f’), {value: 6,enumerable:<br>false});for (var i in o) {console.log(i);}// logs ‘a’ and ‘d’ (in undefined<br>order)Object.keys(o); // [‘a’, ‘d’]o.propertyIsEnumerable(‘a’); //<br>trueo.propertyIsEnumerable(‘b’); // falseo.propertyIsEnumerable(‘c’); //<br>falseo.propertyIsEnumerable(‘d’); //<br>trueo.propertyIsEnumerable(Symbol.for(‘e’)); //<br>trueo.propertyIsEnumerable(Symbol.for(‘f’)); // falsevar p = { …o }p.a // 1p.b<br>// undefinedp.c // undefinedp.d // 4p[Symbol.for(‘e’)] // 5p[Symbol.for(‘f’)] //<br>undefined</p>
+<p><strong>Configurable 属性</strong></p>
+<p>configurable 特性表示对象的属性是否可以被删除，以及除 value 和 writable<br>特性外的其他特性是否可以被修改。</p>
+<p>var o = {};Object.defineProperty(o, ‘a’, { get() { return 1; },configurable:<br>false});Object.defineProperty(o, ‘a’, {configurable: true}); // throws a<br>TypeErrorObject.defineProperty(o, ‘a’, {enumerable: true}); // throws a<br>TypeErrorObject.defineProperty(o, ‘a’, { set() {}}); // throws a TypeError (set<br>was undefined previously)Object.defineProperty(o, ‘a’, { get() { return 1; }});<br>// throws a TypeError// (even though the new get does exactly the same<br>thing)Object.defineProperty(o, ‘a’, {value: 12}); // throws a TypeError //<br>(‘value’ can be changed when ‘configurable’ is false but not in this case due to<br>‘get’ accessor)console.log(o.a); // logs 1delete o.a; // Nothing<br>happensconsole.log(o.a); // logs 1</p>
+<p>如果 o.a 的 configurable 属性为<br>true，则不会抛出任何错误，并且，最后，该属性会被删除。</p>
+<p>添加多个属性和默认值</p>
+<p>考虑特性被赋予的默认特性值非常重要，通常，使用点运算符和 Object.defineProperty()<br>为对象的属性赋值时，数据描述符中的属性默认值是不同的，如下例所示。</p>
+<p>var o = {};o.a = 1;// 等同于：Object.defineProperty(o, “a”, {value: 1,writable:<br>true,configurable: true,enumerable: true});// 另一方面，Object.defineProperty(o,<br>“a”, { value : 1 });// 等同于：Object.defineProperty(o, “a”, {value: 1,writable:<br>false,configurable: false,enumerable: false});</p>
+<p>自定义 Setters 和 Getters</p>
+<p>下面的例子展示了如何实现一个自存档对象。当设置temperature 属性时，archive<br>数组会收到日志条目。</p>
+<p>function Archiver() { var temperature = null; var archive =<br>[];Object.defineProperty(this, ‘temperature’, { get: function()<br>{console.log(‘get!’); return temperature; }, set: function(value) { temperature<br>= value;archive.push({ val: temperature }); } }); this.getArchive = function() {<br>return archive; };}var arc = new Archiver();arc.temperature; //<br>‘get!’arc.temperature = 11;arc.temperature = 13;arc.getArchive(); // [{ val: 11<br>}, { val: 13 }]</p>
+<p>下面这个例子中，getter 总是会返回一个相同的值。</p>
+<p>var pattern = { get: function () { return ‘I alway return this string,whatever<br>you have assigned’; }, set: function () { this.myname = ‘this is my name<br>string’; }};function TestDefineSetAndGet() {Object.defineProperty(this,<br>‘myproperty’, pattern);}var instance = new<br>TestDefineSetAndGet();instance.myproperty = ‘test’;// ‘I alway return this<br>string,whatever you have assigned’console.log(instance.myproperty);// ‘this is<br>my name string’console.log(instance.myname);继承属性</p>
+<p>继承属性</p>
+<p>如果访问者的属性是被继承的，它的 get 和 set<br>方法会在子对象的属性被访问或者修改时被调用。如果这些方法用一个变量存值，该值会被所有对象共享。</p>
+<p>function myclass() {}var value;Object.defineProperty(myclass.prototype, “x”, {<br>get() { return value; }, set(x) { value = x; }});var a = new myclass();var b =<br>new myclass();a.x = 1;console.log(b.x); // 1</p>
+<p>这可以通过将值存储在另一个属性中解决。在 get 和 set 方法中，this<br>指向某个被访问和修改属性的对象。</p>
+<p>function myclass() {}Object.defineProperty(myclass.prototype, “x”, { get() {<br>return this.stored_x; }, set(x) { this.stored_x = x; }});var a = new<br>myclass();var b = new myclass();a.x = 1;console.log(b.x); // undefined</p>
+<p>不像访问者属性，值属性始终在对象自身上设置，而不是一个原型。然而，如果一个不可写的属性被继承，它仍然可以防止修改对象的属性。</p>
+<p>function myclass() {}myclass.prototype.x =<br>1;Object.defineProperty(myclass.prototype, “y”, {writable: false,value: 1});var<br>a = new myclass();a.x = 2;console.log(a.x); //<br>2console.log(myclass.prototype.x); // 1a.y = 2; // Ignored, throws in strict<br>modeconsole.log(a.y); // 1console.log(myclass.prototype.y); // 1</p>
+]]></content>
+      <tags>
+        <tag>js</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>set get Vue (defineProperty)</title>
+    <url>/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/set%20get%20Vue%20(defineProperty)/</url>
+    <content><![CDATA[<p><strong>set get</strong></p>
+<p>set 设置某个键的方法</p>
+<p>get 读取某个键的方法</p>
+<p>eg:</p>
+<p><img src="/css/images/media/533001729f0f1fb2d37d0aedcd69f242.png" alt="clipboard.png"></p>
+<p><img src="/css/images/media/4ac128a522cd3267eddb82c1e6ad40fc.png" alt="clipboard.png"></p>
+<p>回顾 defineProperty方法：</p>
+<p>直接在一个对象上定义一个新属性，或者修改一个对象的现有属性，并返回此对象。</p>
+<p>对象里目前存在的属性描述符有两种主要形式：<em>数据描述符</em>和<em>存取描述符</em>。<em>数据描述符</em>是一个具有值的属性，该值可以是可写的，也可以是不可写的。<em>存取描述符</em>是由<br>getter 函数和 setter 函数所描述的属性。一个描述符只能是这两者其中之一；</p>
+<p>如果一个描述符不具有 value、writable、get 和 set<br>中的任意一个键，那么它将被认为是一个数据描述符。如果一个描述符同时拥有 value 或<br>writable 和 get 或 set 键，则会产生一个异常。</p>
+<p><strong>set get改写值：</strong></p>
+<p>setters时用一个值去暂存要更改的值，然后getter的时候取这个值</p>
+<p>正确示例：</p>
+<p>‘use strict’;</p>
+<p>let obj = { name: ‘jack’ };</p>
+<p>let temp = ‘’; //用这个值暂存更改的值（不直接更改），getter<br>取这个，这样不会一直setter了</p>
+<p>Object.<strong>defineProperty</strong>(obj, ‘name’, {</p>
+<p><strong>set</strong>(newV) { //当obj.name = ‘xxx’ 时触发</p>
+<p>console.<strong>log</strong>(‘setter被触发了’, newV);</p>
+<p>temp = newV; //保存新值</p>
+<p>},</p>
+<p><strong>get</strong>() { // 当obj.name就能触发</p>
+<p>console.<strong>log</strong>(‘getter被触发了’);</p>
+<p>return temp;</p>
+<p>}</p>
+<p>});</p>
+<p>obj.name = ‘1’;</p>
+<p>console.<strong>log</strong>(obj,obj.name)</p>
+<p><img src="/css/images/media/e523f7d14b8638ec930d3d0f71f78fca.png" alt="clipboard.png"></p>
+<p>错误示例： 没暂存（temp）,结果一直更改，死循环。</p>
+<p><img src="/css/images/media/fa9243e400a7c17f7a44f3f1f2fef913.png" alt="clipboard.png"></p>
+<p><img src="/css/images/media/74cab8f02097d94b6fc9ca294a6fccc2.png" alt="clipboard.png"></p>
+<p><strong>山寨Vue</strong></p>
+<p>eg:</p>
+<p>&lt;html&gt;</p>
+<p>&lt;head&gt;</p>
+<p>&lt;meta charset=”UTF-8”&gt;</p>
+<p>&lt;title&gt;vue&lt;/title&gt;</p>
+<p>&lt;/head&gt;</p>
+<p>&lt;body&gt;</p>
+<p>&lt;input type=”text” name=””&gt;</p>
+<p>&lt;script type=”text/javascript”&gt;</p>
+<p>‘use strict’;</p>
+<p>let obj = {};</p>
+<p>let input = document.<strong>querySelector</strong>(‘input’);</p>
+<p>//页面改变影响内存</p>
+<p>input.<strong>onkeyup</strong> = function(){</p>
+<p>obj.name = this.value;// 用于input框内容更改，对应修改obj的name属性</p>
+<p>// console.log(obj)</p>
+<p>}</p>
+<p>//内存改变影响页面</p>
+<p>// 比如设置 obj.name = ‘1234’ 最下方;</p>
+<p>let tmp = ‘’; //tmp 暂存更改的值</p>
+<p>Object.<strong>defineProperty</strong>(obj,’name’,{</p>
+<p><strong>set</strong>(newV){</p>
+<p>tmp = newV;</p>
+<p>//更改页面元素的value 用于js更改name属性，对应修改input框 （比如最下方）</p>
+<p>input.value = newV;</p>
+<p>},</p>
+<p><strong>get</strong>(){</p>
+<p>return tmp;</p>
+<p>}</p>
+<p>})</p>
+<p>// obj.name = ‘1234’;</p>
+<p>// console.log(obj) 这样就给input 加了个初始值。</p>
+<p>&lt;/script&gt;</p>
+<p>&lt;/body&gt;</p>
+<p>&lt;/html&gt;</p>
+<p>Vue2.0 双向数据绑定就是利用Object.defineProperty 实现的</p>
+<p>Vue3.0 将使用 ES6的Proxy 作为其观察者机制 取代 Object.defineProperty<br>（es6笔记里有Proxy）</p>
+]]></content>
+      <tags>
+        <tag>html</tag>
+        <tag>js</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>事件循环EventLoop</title>
+    <url>/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/%E4%BA%8B%E4%BB%B6%E5%BE%AA%E7%8E%AFEventLoop/</url>
+    <content><![CDATA[<p><img src="/css/images/media/bcf274a46809fced4fc8b993827fdd7d.png" alt="clipboard.png"></p>
+<p>同步先执行</p>
+<p>异步都先扔到任务队列里 （宏任务， 为任务）</p>
+<p>微任务一般放到任务队列尾部，宏任务等当前任务尾部抛出事件，等待下次任务队列执行开始的时候执行，因此微任务较早些，毫秒级，<br>宏任务 几毫秒 几十毫秒 或者几百毫秒把， 比微任务要多。</p>
+<p>任务队列</p>
+<p>时间轴队列 每一帧</p>
+]]></content>
+      <tags>
+        <tag>js</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>垃圾回收机制（GC）</title>
+    <url>/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6%EF%BC%88GC%EF%BC%89/</url>
+    <content><![CDATA[<p>垃圾回收（Garbage<br>Collection，GC），顾名思义就是释放垃圾占用的空间，防止内存泄露。有效的使用可以使用的内存，对内存堆中已经死亡的或者长时间没有使用的对象进行清除和回收。</p>
+<p>小知识 ： 不再用到的内存，没有及时释放，就叫做内存泄漏（memory leak）</p>
+<p>容易引起内存泄露的场景：</p>
+<p>1.闭包内的参数占用 （fn调用完了，然而 内的参数在被使用所以还不能清）</p>
+<p>2.大量使用全局变量</p>
+<p>3.定时器忘记清</p>
+<p>4.dom元素的引用</p>
+<p>//let btn = document.getElementById(‘btn’)</p>
+<p>// btn.remove();</p>
+<p>// console.log(btn);</p>
+<p><img src="/css/images/media/03931a812ea3848e0df1066252dc5f1a.png" alt="clipboard.png"></p>
+<p>虽然删了，页面上虽然不存在了，但是内存里还在。 可以给btn 在赋个null</p>
+<p>浏览器常用垃圾判断方法 （用的比较多的是 1 、4）</p>
+<p>1.引用计数法</p>
+<p><img src="/css/images/media/2ed84a83e5b248c8e8fccbf8db5d4b2a.png" alt="clipboard.png"></p>
+<p>给每一个变量贴标签，总共用了几次，隔断时间就巡视下查看某个变量，还有几次没用，如果为0，就给清掉。</p>
+<p>缺点是 会产生无数碎片，有些能用 有些不能用</p>
+<p><img src="/css/images/media/9963917bcf6831b6b5becfc43b296e91.png" alt="clipboard.png"></p>
+<p>2.复制整理法 （最好，java 就用这个）</p>
+<p>隔段时间复制一下内存里的东西，复制的过程中把呢些无用的给清理了，并且还重新做了排序。</p>
+<p>缺点是 内存要被分成两块（浪费些空间）</p>
+<p><img src="/css/images/media/aafb7c3d00fcfbda214c11c2a1cd1b32.png" alt="clipboard.png"></p>
+<p>3.标记清除法</p>
+<p>每隔一段时间 使劲扫描内存，然后清理无用的变量，</p>
+<p>缺点也是 会产生无数碎片，有些能用 有些不能用</p>
+<p><img src="/css/images/media/da69474c91a2c7909d4802caa2a0b07f.png" alt="clipboard.png"></p>
+<p>4.标记整理法</p>
+<p>每隔一段时间 使劲扫描内存，然后清理无用的变量，并且做排序</p>
+<p>缺点是 工作量大消耗些性能</p>
+<p><img src="/css/images/media/163a122405014d503ce6b4e2bcdcc58b.png" alt="clipboard.png"></p>
+]]></content>
+      <tags>
+        <tag>js</tag>
+        <tag>gc</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>浅、深克隆</title>
+    <url>/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/%E6%B5%85%E3%80%81%E6%B7%B1%E5%85%8B%E9%9A%86/</url>
+    <content><![CDATA[<p><strong>浅克隆</strong></p>
+<p>都是只能复制外层属性，有复杂数据类型就不行了，第二层不行，原数组或者新数组更改，都会发生变化，因为是简单的复制，复制<br>el 如果是复杂数据类型是址传递的</p>
+<p>法1：循环赋值</p>
+<p>var obj = {a: 1,b:2,c:{d:100,e:99}}</p>
+<p>function <strong>shallowClone1</strong>(obj) {</p>
+<p>let res = {};</p>
+<p>for(let key in obj) {</p>
+<p>res[key] = obj[key]</p>
+<p>}</p>
+<p>return res</p>
+<p>}</p>
+<p>const obj2 = <strong>shallowClone1</strong>(obj)</p>
+<p>obj.c.d = 1</p>
+<p>console.<strong>log</strong>(obj,obj2)</p>
+<p><img src="/css/images/media/0dde76b7be20bc852d1105c61e1a4ffe.png" alt="clipboard.png"></p>
+<p>法2：利用Object.<strong>assign()</strong></p>
+<p>var obj = {a: 1,b:2,c:{d:100,e:99}}</p>
+<p>function <strong>shallowClone2</strong>(obj) {</p>
+<p>return Object.<strong>assign</strong>({},obj)</p>
+<p>}</p>
+<p>const obj2 = <strong>shallowClone2</strong>(obj)</p>
+<p>obj.c.d = 1</p>
+<p>console.<strong>log</strong>(obj,obj2)</p>
+<p><img src="/css/images/media/b65c4997752b596db4105c3eab0bcfb9.png" alt="clipboard.png"></p>
+<p><strong>深克隆</strong></p>
+<p>法3较好（暂不支持原型的克隆，和Set、Map等数据结构的克隆）</p>
+<p>不仅拷贝对象本身，而且拷贝对象包含的引用指向的所有对象.可以解决浅复制的缺陷</p>
+<p>法1：利用 JSON.parse和JSON.stringify 方法</p>
+<p>var obj = { a: 1, b: 2, c: { d: 100, e: 99 } }</p>
+<p>function <strong>deepClone1</strong>(obj) {</p>
+<p>return JSON.parse(JSON.stringify(obj))</p>
+<p>}</p>
+<p>const obj2 = <strong>deepClone1</strong>(obj)</p>
+<p>obj.c.d = 1</p>
+<p>console.<strong>log</strong>(obj, obj2)</p>
+<p><img src="/css/images/media/7dedc93ebcfc2c1b91218b98a580c725.png" alt="clipboard.png"></p>
+<p>缺点：set、get 复制不了， 不可遍历属性赋值不了 {enumerable：false}</p>
+<p>如下就不能复制。</p>
+<p>var obj = {</p>
+<p>a: 1,</p>
+<p>b: 2,</p>
+<p>c: {</p>
+<p>d: 100,</p>
+<p>e: 99,</p>
+<p>set <strong>f</strong>(val) {</p>
+<p>this.a = value;</p>
+<p>},</p>
+<p>get <strong>f</strong>() {</p>
+<p>return this.a;</p>
+<p>}</p>
+<p>},</p>
+<p>set <strong>f</strong>(val) {</p>
+<p>this.a = value;</p>
+<p>},</p>
+<p>get <strong>f</strong>() {</p>
+<p>return this.a;</p>
+<p>}</p>
+<p>}</p>
+<p>Object.<strong>defineProperty</strong>(obj,”h”, {</p>
+<p>value: 10</p>
+<p>})</p>
+<p>function <strong>deepClone1</strong>(obj) {</p>
+<p>return JSON.parse(JSON.stringify(obj))</p>
+<p>}</p>
+<p>const obj2 = <strong>deepClone1</strong>(obj)</p>
+<p>obj.c.d = 1</p>
+<p>console.<strong>log</strong>(obj, obj2);</p>
+<p><img src="/css/images/media/5af5d10f7b40699009d5403ba5f37d59.png" alt="clipboard.png"></p>
+<p>法2：循环遍历赋值</p>
+<p>1.先判断要拷贝的值是对象还是数组（方法很多）</p>
+<p>2.循环遍历（循环方法也有很多），普通类型的直接赋值,</p>
+<p>3.不是普通类型的递归调用。</p>
+<p>缺点也是：set、get 复制不了， 不可遍历属性赋值不了 {enumerable：false}</p>
+<p>function <strong>deepClone2</strong>(source) {</p>
+<p>if (!source &amp;&amp; typeof source !== ‘object’) {</p>
+<p>throw new Error(‘error arguments’, ‘shallowClone’)</p>
+<p>}</p>
+<p>const targetObj = source.constructor === Array ? [] : {}</p>
+<p>Object.<strong>keys</strong>(source).<strong>forEach</strong>(keys =&gt; {</p>
+<p>if (source[keys] &amp;&amp; typeof source[keys] === ‘object’) {</p>
+<p>targetObj[keys] = <strong>deepClone2</strong>(source[keys])</p>
+<p>} else {</p>
+<p>targetObj[keys] = source[keys]</p>
+<p>}</p>
+<p>})</p>
+<p>return targetObj</p>
+<p>}</p>
+<p><img src="/css/images/media/6c32f0ddcee8cb7699f5732b6eaf5303.png" alt="clipboard.png"></p>
+<p>法3：循环遍历进阶版 基本完美 属性都能完美的被复制，set get 不可遍历属性都可以<br>复制对象的原型不能复制，上面的也都不可以。</p>
+<p>/*</p>
+<p>getOwnPropertyDescriptor</p>
+<p>返回指定对象上一个自有属性对应的属性描述 例如：</p>
+<p>{configurable: true</p>
+<p>enumerable: true</p>
+<p>value: 1</p>
+<p>writable: true}</p>
+<p>还有 set get 等，这里没举例，详见defineProperty</p>
+<p>*/</p>
+<p>function <strong>deepClone3</strong>(source) {</p>
+<p>let target=source.constructor === Array ? [] : {};</p>
+<p>let names =<br>Object.<strong>getOwnPropertyNames</strong>(source)//获取source的所有属性，包括不可遍历的；</p>
+<p>for(let i =0;i&lt;names.length;i++) {</p>
+<p>let desc = Object.<strong>getOwnPropertyDescriptor</strong>(source,<br>names[i])//返回指定对象上一个自有属性对应的属性描述</p>
+<p>if(typeof (desc.value)===”object” &amp;&amp; desc.value!==null) {</p>
+<p>let obj = <strong>deepClone3</strong>(desc.value)</p>
+<p>Object.<strong>defineProperty</strong>(target,names[i], {</p>
+<p>configurable: desc.configurable, //不可删除</p>
+<p>enumerable: desc.enumerable, //是否可遍历</p>
+<p>value: obj,</p>
+<p>writable: desc.writable, //是否可写</p>
+<p>})</p>
+<p>} else {</p>
+<p>Object.<strong>defineProperty</strong>(target, names[i], desc)</p>
+<p>}</p>
+<p>}</p>
+<p>return target</p>
+<p>}</p>
+<p><img src="/css/images/media/a512a7ac536d613a64cb64c65789cfb6.png" alt="clipboard.png"></p>
+<p>法4：lodash的克隆， Set Map 等结构都能拷贝，<br>（发现缺点，对象的不可遍历属性不能复制，set/get 也不行等）</p>
+<p>// 先引入lodash</p>
+<p>&lt;script<br>src=”<a href="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js&quot;/&gt;/">https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js&quot;\&gt;\</a>&lt;/script&gt;</p>
+<p>// 调用就是 _.cloneDeep()就可以</p>
+<p>const b = { b: 66 }</p>
+<p>const d = new Set([1, 2, { a: 99 }, b, 4])</p>
+<p>var obj = {</p>
+<p>a: 1,</p>
+<p>b: 2,</p>
+<p>c: {</p>
+<p>d: 100,</p>
+<p>e: 99,</p>
+<p>set <strong>f</strong>(val) {</p>
+<p>this.a = value;</p>
+<p>},</p>
+<p>get <strong>f</strong>() {</p>
+<p>return this.a;</p>
+<p>}</p>
+<p>},</p>
+<p>d,</p>
+<p>set <strong>f</strong>(val) {</p>
+<p>this.a = value;</p>
+<p>},</p>
+<p>get <strong>f</strong>() {</p>
+<p>return this.a;</p>
+<p>},</p>
+<p>}</p>
+<p>Object.<strong>defineProperty</strong>(obj, “h”, {</p>
+<p>// enumerable: true,</p>
+<p>value: 10,</p>
+<p>// writable: true,</p>
+<p>})</p>
+<p>const obj3 = _.<strong>cloneDeep</strong>(obj)</p>
+<p>obj.c.d = 1</p>
+<p>obj.d.<strong>add</strong>(11)</p>
+<p>b.b = 18</p>
+<p>console.<strong>log</strong>(obj, obj3);</p>
+<p><img src="/css/images/media/0d12892db1a78dccf18628a465cf616c.png" alt="clipboard.png"></p>
+<p>上面不可遍历属性h没有克隆下来 set get也没， 其他到还好。Set数据结构完美拷贝。</p>
+<p><strong>最后深克隆的整合</strong></p>
+<p>对上面 法3 多扩展了Set<br>数据结构的克隆，其他如Map等数据结构也能扩充这里就先不扩充了</p>
+<p>&lt;!DOCTYPE html&gt;</p>
+<p>&lt;html lang=”en”&gt;</p>
+<p>&lt;head&gt;</p>
+<p>&lt;meta charset=”UTF-8”&gt;</p>
+<p>&lt;meta name=”viewport” content=”width=device-width, initial-scale=1.0”&gt;</p>
+<p>&lt;title&gt;浅、深克隆&lt;/title&gt;</p>
+<p>&lt;script<br>src=”<a href="https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js&quot;/&gt;/">https://cdn.jsdelivr.net/npm/lodash@4.17.20/lodash.min.js&quot;\&gt;\</a>&lt;/script&gt;</p>
+<p>&lt;/head&gt;</p>
+<p>&lt;body&gt;</p>
+<p>&lt;script&gt;</p>
+<p>const b = { b: 66 }</p>
+<p>const d = new Set([1, 2, { a: 99 },b, 4])</p>
+<p>var obj = {</p>
+<p>a: 1,</p>
+<p>b: 2,</p>
+<p>c: {</p>
+<p>d: 100,</p>
+<p>e: 99,</p>
+<p>set <strong>f</strong>(val) {</p>
+<p>this.a = value;</p>
+<p>},</p>
+<p>get <strong>f</strong>() {</p>
+<p>return this.a;</p>
+<p>}</p>
+<p>},</p>
+<p>d,</p>
+<p>set <strong>f</strong>(val) {</p>
+<p>this.a = value;</p>
+<p>},</p>
+<p>get <strong>f</strong>() {</p>
+<p>return this.a;</p>
+<p>},</p>
+<p>}</p>
+<p>Object.<strong>defineProperty</strong>(obj,”h”, {</p>
+<p>// enumerable: true,</p>
+<p>value: 10,</p>
+<p>// writable: true,</p>
+<p>})</p>
+<p>function <strong>deepClone5</strong>(source) {</p>
+<p>// 不为复杂类型 或者是 null 就直接返回</p>
+<p>if(typeof source!==”object” || source== null) {</p>
+<p>return source</p>
+<p>} else {</p>
+<p>// 判断是什么数据结构 然后区分操作， 这里只是分了 Set Array Object 别的没写，<br>可以以此类推。</p>
+<p>let target = source.constructor === Set ? new Set() : (source.constructor ===<br>Array ? [] : {});</p>
+<p>if (source.constructor === Set) {</p>
+<p>source.<strong>forEach</strong>(value =&gt; {</p>
+<p>if (value &amp;&amp; typeof value === “object”) {</p>
+<p>let obj = <strong>deepClone5</strong>(value)</p>
+<p>target.<strong>add</strong>(obj)</p>
+<p>} else {</p>
+<p>target.<strong>add</strong>(value)</p>
+<p>}</p>
+<p>})</p>
+<p>} else {</p>
+<p>let names =<br>Object.<strong>getOwnPropertyNames</strong>(source)//获取source的所有属性，包括不可遍历的；</p>
+<p>for (let i = 0; i &lt; names.length; i++) {</p>
+<p>let desc = Object.<strong>getOwnPropertyDescriptor</strong>(source,<br>names[i])//返回指定对象上一个自有属性对应的属性描述</p>
+<p>if (typeof (desc.value) === “object” &amp;&amp; desc.value !== null) {</p>
+<p>let obj = <strong>deepClone5</strong>(desc.value)</p>
+<p>Object.<strong>defineProperty</strong>(target, names[i], {</p>
+<p>configurable: desc.configurable, //不可删除</p>
+<p>enumerable: desc.enumerable, //是否可遍历</p>
+<p>value: obj,</p>
+<p>writable: desc.writable, //是否可写</p>
+<p>})</p>
+<p>} else {</p>
+<p>Object.<strong>defineProperty</strong>(target, names[i], desc)</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>return target</p>
+<p>}</p>
+<p>}</p>
+<p>// 自己写的深克隆</p>
+<p>const obj2 = <strong>deepClone5</strong>(obj)</p>
+<p>// 对比lodash</p>
+<p>const obj3 = _.<strong>cloneDeep</strong>(obj)</p>
+<p>obj.c.d = 1</p>
+<p>obj.d.<strong>add</strong>(11)</p>
+<p>b.b=18</p>
+<p>console.<strong>log</strong>(obj, obj2, obj3);</p>
+<p>&lt;/script&gt;</p>
+<p>&lt;/body&gt;</p>
+<p>&lt;/html&gt;</p>
+<p><img src="/css/images/media/20732f10cab10061b5d7516f9d48d3a0.png" alt="clipboard.png"></p>
+]]></content>
+      <tags>
+        <tag>js</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>闭包</title>
+    <url>/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/%E9%97%AD%E5%8C%85/</url>
+    <content><![CDATA[<p>类似文章：</p>
+<p><a href="https://javascript.ruanyifeng.com/grammar/function.html/#toc13">https://javascript.ruanyifeng.com/grammar/function.html\#toc13</a></p>
+<p><a href="https://blog.csdn.net/weixin_43586120/article/details/89456183">https://blog.csdn.net/weixin_43586120/article/details/89456183</a></p>
+<p>闭包（closure）是 Javascript<br>语言的一个难点，也是它的特色，很多高级应用都要依靠闭包实现。</p>
+<p>理解闭包，首先必须理解变量作用域。前面提到，JavaScript<br>有两种作用域：全局作用域和函数作用域。函数内部可以直接读取全局变量。</p>
+<p>var n = 999;function f1() { console.log(n); }f1() // 999</p>
+<p>上面代码中，函数f1可以读取全局变量n。</p>
+<p>但是，函数外部无法读取函数内部声明的变量。</p>
+<p>function f1() { var n = 999; }console.log(n)// Uncaught ReferenceError: n is not<br>defined</p>
+<p>上面代码中，函数f1内部声明的变量n，函数外是无法读取的。</p>
+<p>如果出于种种原因，需要得到函数内的局部变量。正常情况下，这是办不到的，只有通过变通方法才能实现。那就是在函数的内部，再定义一个函数。</p>
+<p>function f1() { var n = 999; function f2() { console.log(n); // 999} }</p>
+<p>上面代码中，函数f2就在函数f1内部，这时f1内部的所有局部变量，对f2都是可见的。但是反过来就不行，f2内部的局部变量，对f1就是不可见的。这就是<br>JavaScript 语言特有的”链式作用域”结构（chain<br>scope），子对象会一级一级地向上寻找所有父对象的变量。所以，父对象的所有变量，对子对象都是可见的，反之则不成立。</p>
+<p>既然f2可以读取f1的局部变量，那么只要把f2作为返回值，我们不就可以在f1外部读取它的内部变量了吗！</p>
+<p>function f1() { var n = 999; function f2() { console.log(n); } return f2; }var<br>result = f1();result(); // 999</p>
+<p>上面代码中，函数f1的返回值就是函数f2，由于f2可以读取f1的内部变量，所以就可以在外部获得f1的内部变量了。</p>
+<p>闭包就是函数f2，即能够读取其他函数内部变量的函数。由于在 JavaScript<br>语言中，只有函数内部的子函数才能读取内部变量，因此可以把闭包简单理解成“定义在一个函数内部的函数”。闭包最大的特点，就是它可以“记住”诞生的环境，比如f2记住了它诞生的环境f1，所以从f2可以得到f1的内部变量。在本质上，闭包就是将函数内部和函数外部连接起来的一座桥梁。</p>
+<p>闭包的最大用处有两个，一个是可以读取函数内部的变量，另一个就是让这些变量始终保持在内存中，即闭包可以使得它诞生环境一直存在。请看下面的例子，闭包使得内部变量记住上一次调用时的运算结果。</p>
+<p>function createIncrementor(start) { return function () { return start++; }; }var<br>inc = createIncrementor(5);inc() // 5inc() // 6inc() // 7</p>
+<p>上面代码中，start是函数createIncrementor的内部变量。通过闭包，start的状态被保留了，每一次调用都是在上一次调用的基础上进行计算。从中可以看到，闭包inc使得函数createIncrementor的内部环境，一直存在。所以，闭包可以看作是函数内部作用域的一个接口。</p>
+<p>为什么会这样呢？原因就在于inc始终在内存中，而inc的存在依赖于createIncrementor，因此也始终在内存中，不会在调用结束后，被垃圾回收机制回收。</p>
+<p>闭包的另一个用处，是封装对象的私有属性和私有方法。</p>
+<p>function Person(name) { var _age; function setAge(n) { _age = n; } function<br>getAge() { return _age; } return { name: name, getAge: getAge, setAge: setAge};<br>}var p1 = Person(‘张三’);p1.setAge(25);p1.getAge() // 25</p>
+<p>上面代码中，函数Person的内部变量_age，通过闭包getAge和setAge，变成了返回对象p1的私有变量。</p>
+<p>注意，外层函数每次运行，都会生成一个新的闭包，而这个闭包又会保留外层函数的内部变量，所以内存消耗很大。因此不能滥用闭包，否则会造成网页的性能问题。</p>
+<p>自己写个闭包小demo</p>
+<p><img src="/css/images/media/f896db0ad8dec3bd9218a317a5a1f590.png" alt="clipboard.png"></p>
+]]></content>
+      <tags>
+        <tag>js</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>防抖 节流</title>
+    <url>/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/%E9%98%B2%E6%8A%96%20%E8%8A%82%E6%B5%81/</url>
+    <content><![CDATA[<h1 id="防抖"><a href="#防抖" class="headerlink" title="防抖"></a>防抖</h1><p>当持续触发事件时，一定时间段内没有再触发事件，事件处理函数才会执行一次，如果设定时间到来之前，又触发了事件，就重新开始延时。也就是说当一个用户一直触发这个函数，且每次触发函数的间隔小于既定时间，那么防抖的情况下只会执行一次。</p>
+<p>// 防抖</p>
+<p>function <strong>debounce</strong>(callback,delay=300) {</p>
+<p>var t = null;</p>
+<p>var th, args;</p>
+<p>return function(e){</p>
+<p>th = this;</p>
+<p>args = arguments;</p>
+<p>if(t!==null) clearTimeout(t);</p>
+<p>t=setTimeout(()=&gt;{</p>
+<p>callback.<strong>apply</strong>(th,args);</p>
+<p>},delay)</p>
+<p>}</p>
+<p>}</p>
+<h1 id="节流"><a href="#节流" class="headerlink" title="节流"></a>节流</h1><p>当持续触发事件时，保证在一定时间内只调用一次事件处理函数，意思就是说，假设一个用户一直触发这个函数，且每次触发小于既定值，函数节流会每隔这个时间调用一次</p>
+<p>用一句话总结防抖和节流的区别：防抖是将多次执行变为最后一次执行，节流是将多次执行变为每隔一段时间执行</p>
+<p>实现函数节流我们主要有两种方法：时间戳和定时器</p>
+<p>// 节流1 单位时间只触发一次，多余直接忽略</p>
+<p>function <strong>throttle1</strong>(callback,duration=300) {</p>
+<p>var lastTime = new Date().<strong>getTime</strong>();</p>
+<p>var now, th, args;</p>
+<p>return function() {</p>
+<p>th = this;</p>
+<p>args = arguments;</p>
+<p>now = new Date().<strong>getTime</strong>();</p>
+<p>if(now- lastTime&gt;duration) {</p>
+<p>callback.<strong>apply</strong>(th, args);</p>
+<p>lastTime = now;</p>
+<p>} else {</p>
+<p>return;</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>// 节流2 利用时间戳让第一次滚动事件执行一次回调函数，</p>
+<p>// 此后每隔duration执行一次，</p>
+<p>// 在小于1000ms这段时间内的滚动是不执行的</p>
+<p>function <strong>throttle2</strong>(callback, duration = 300) {</p>
+<p>var timer = null;</p>
+<p>var th, args;</p>
+<p>return function () {</p>
+<p>th = this;</p>
+<p>args = arguments;</p>
+<p>if (!timer) {</p>
+<p>timer=setTimeout(function(){</p>
+<p>callback.<strong>apply</strong>(th, args);</p>
+<p>timer = null;</p>
+<p>}, duration)</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>// 节流3 最终版</p>
+<p>// 单用时间戳或者定时器都有缺陷，</p>
+<p>// 我们更希望第一次触发马上执行函数，</p>
+<p>// 最后一次触发也可以执行一次事件处理函数</p>
+<p>function <strong>throttle3</strong>(fn, interval=300) {</p>
+<p>var last,timer,th,args, now;</p>
+<p>return function () {</p>
+<p>th = this;</p>
+<p>args = arguments;</p>
+<p>now = +new Date();</p>
+<p>if (last &amp;&amp; now - last &lt; interval) {</p>
+<p>//满足条件 延迟执行 这里可以向下面一样有化成 计算剩余 remaining时间的</p>
+<p>//remaining = delay - (curTime - startTime); //剩余时间</p>
+<p>//然后 定时器的延时 为remaining 目前下面的代码有误。这里是可以优化的方向</p>
+<p>clearTimeout(timer);</p>
+<p>timer = setTimeout(function () {</p>
+<p>last = now;</p>
+<p>fn.<strong>apply</strong>(th, args);</p>
+<p>}, interval);</p>
+<p>} else { //第一次不存在last 立即执行else， 间隔过大（大于或等于interval）也执行<br>else</p>
+<p>last = now;</p>
+<p>fn.<strong>apply</strong>(th, args);</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>// function throttle3(callback, delay) {</p>
+<p>// var timer = null;</p>
+<p>// var startTime = Date.now(); //设置开始时间</p>
+<p>// var curTime;</p>
+<p>// var remaining;</p>
+<p>// var th;</p>
+<p>// var args;</p>
+<p>// return function () {</p>
+<p>// curTime = Date.now();</p>
+<p>// remaining = delay - (curTime - startTime); //剩余时间</p>
+<p>// th = this;</p>
+<p>// args = arguments;</p>
+<p>// clearTimeout(timer);</p>
+<p>// if (remaining &lt;= 0) { // 第一次触发立即执行</p>
+<p>// startTime = curTime;</p>
+<p>// callback.apply(th, args);</p>
+<p>// } else {</p>
+<p>// timer = setTimeout(function(){</p>
+<p>// startTime = curTime;</p>
+<p>// callback.apply(th, args);</p>
+<p>// }, remaining); //取消当前计数器并计算新的remaining</p>
+<p>// }</p>
+<p>// }</p>
+<p>// }</p>
+<p>完整实验代码如下</p>
+<p>&lt;!DOCTYPE html&gt;</p>
+<p>&lt;head&gt;</p>
+<p>&lt;title&gt;节流与防抖&lt;/title&gt;</p>
+<p>&lt;style&gt;</p>
+<p>*{</p>
+<p>margin: 0;</p>
+<p>padding: 0;</p>
+<p>box-sizing: border-box;</p>
+<p>}</p>
+<p>#content{</p>
+<p>width: 300px;</p>
+<p>/* height: 80vh; */</p>
+<p>margin: 10vh auto;</p>
+<p>border:1px solid red;</p>
+<p>/* overflow-y: auto; */</p>
+<p>}</p>
+<p>ul{</p>
+<p>width: 100%;</p>
+<p>}</p>
+<p>ul li{</p>
+<p>padding-top: 10px;</p>
+<p>padding-bottom: 10px;</p>
+<p>line-height: 20px;</p>
+<p>padding-left: 5px;</p>
+<p>border-bottom: 1px solid <em>#ccc</em>;</p>
+<p>}</p>
+<p>&lt;/style&gt;</p>
+<p>&lt;/head&gt;</p>
+<p>&lt;body&gt;</p>
+<p>&lt;div id=”content”&gt;</p>
+<p>&lt;ul&gt;</p>
+<p>&lt;/ul&gt;</p>
+<p>&lt;/div&gt;</p>
+<p>&lt;script&gt;</p>
+<p>for(var i=0;i&lt; 100;i++) {</p>
+<p>const el = document.<strong>createElement</strong>(“li”)</p>
+<p>el.innerHTML=”我是第”+ i + “个 li”</p>
+<p>document.<strong>querySelector</strong>(“ul”).<strong>appendChild</strong>(el)</p>
+<p>}</p>
+<p>window.<strong>addEventListener</strong>(“scroll”,<br><strong>throttle3</strong>(function(){console.<strong>log</strong>(“执行了”)}, 1800))</p>
+<p>// 防抖</p>
+<p>function <strong>debounce</strong>(callback,delay=300) {</p>
+<p>var t = null;</p>
+<p>var th, args;</p>
+<p>return function(e){</p>
+<p>th = this;</p>
+<p>args = arguments;</p>
+<p>if(t!==null) clearTimeout(t);</p>
+<p>t=setTimeout(()=&gt;{</p>
+<p>callback.<strong>apply</strong>(th,args);</p>
+<p>},delay)</p>
+<p>}</p>
+<p>}</p>
+<p>// 节流1 单位时间只触发一次，多余直接忽略</p>
+<p>function <strong>throttle1</strong>(callback,duration=300) {</p>
+<p>var lastTime = new Date().<strong>getTime</strong>();</p>
+<p>var now, th, args;</p>
+<p>return function() {</p>
+<p>th = this;</p>
+<p>args = arguments;</p>
+<p>now = new Date().<strong>getTime</strong>();</p>
+<p>if(now- lastTime&gt;duration) {</p>
+<p>callback.<strong>apply</strong>(th, args);</p>
+<p>lastTime = now;</p>
+<p>} else {</p>
+<p>return;</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>// 节流2 利用时间戳让第一次滚动事件执行一次回调函数，</p>
+<p>// 此后每隔duration执行一次，</p>
+<p>// 在小于1000ms这段时间内的滚动是不执行的</p>
+<p>function <strong>throttle2</strong>(callback, duration = 300) {</p>
+<p>var timer = null;</p>
+<p>var th, args;</p>
+<p>return function () {</p>
+<p>th = this;</p>
+<p>args = arguments;</p>
+<p>if (!timer) {</p>
+<p>timer=setTimeout(function(){</p>
+<p>callback.<strong>apply</strong>(th, args);</p>
+<p>timer = null;</p>
+<p>}, duration)</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>// 节流3 最终版</p>
+<p>// 单用时间戳或者定时器都有缺陷，</p>
+<p>// 我们更希望第一次触发马上执行函数，</p>
+<p>// 最后一次触发也可以执行一次事件处理函数</p>
+<p>function <strong>throttle3</strong>(fn, interval=300) {</p>
+<p>var last,timer,th,args, now;</p>
+<p>return function () {</p>
+<p>th = this;</p>
+<p>args = arguments;</p>
+<p>now = +new Date();</p>
+<p>if (last &amp;&amp; now - last &lt; interval) {</p>
+<p>//满足条件 延迟执行 这里可以向下面一样有化成 计算剩余 remaining时间的</p>
+<p>//remaining = delay - (curTime - startTime); //剩余时间</p>
+<p>//然后 定时器的延时 为remaining 目前下面的代码有误。这里是可以优化的方向</p>
+<p>clearTimeout(timer);</p>
+<p>timer = setTimeout(function () {</p>
+<p>last = now;</p>
+<p>fn.<strong>apply</strong>(th, args);</p>
+<p>}, interval);</p>
+<p>} else { //第一次不存在last 立即执行else， 间隔过大（大于或等于interval）也执行<br>else</p>
+<p>last = now;</p>
+<p>fn.<strong>apply</strong>(th, args);</p>
+<p>}</p>
+<p>}</p>
+<p>}</p>
+<p>// function throttle3(callback, delay) {</p>
+<p>// var timer = null;</p>
+<p>// var startTime = Date.now(); //设置开始时间</p>
+<p>// var curTime;</p>
+<p>// var remaining;</p>
+<p>// var th;</p>
+<p>// var args;</p>
+<p>// return function () {</p>
+<p>// curTime = Date.now();</p>
+<p>// remaining = delay - (curTime - startTime); //剩余时间</p>
+<p>// th = this;</p>
+<p>// args = arguments;</p>
+<p>// clearTimeout(timer);</p>
+<p>// if (remaining &lt;= 0) { // 第一次触发立即执行</p>
+<p>// startTime = curTime;</p>
+<p>// callback.apply(th, args);</p>
+<p>// } else {</p>
+<p>// timer = setTimeout(function(){</p>
+<p>// startTime = curTime;</p>
+<p>// callback.apply(th, args);</p>
+<p>// }, remaining); //取消当前计数器并计算新的remaining</p>
+<p>// }</p>
+<p>// }</p>
+<p>// }</p>
+<p>&lt;/script&gt;</p>
+<p>&lt;/body&gt;</p>
+<p>&lt;/html&gt;</p>
+]]></content>
+      <tags>
+        <tag>html</tag>
+        <tag>js</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>页面优化</title>
+    <url>/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/%E9%A1%B5%E9%9D%A2%E4%BC%98%E5%8C%96/</url>
+    <content><![CDATA[<p>1. 静态资源cdn引入</p>
+<p>公开的CDN资源服务： <a href="https://www.jsdelivr.com/">https://www.jsdelivr.com/</a> <a href="https://www.bootcdn.cn/">https://www.bootcdn.cn/</a></p>
+]]></content>
+      <tags>
+        <tag>html</tag>
+        <tag>css</tag>
+        <tag>js</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>预解析、作用域及作用域链</title>
+    <url>/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/%E9%A2%84%E8%A7%A3%E6%9E%90%E3%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%8F%8A%E4%BD%9C%E7%94%A8%E5%9F%9F%E9%93%BE/</url>
+    <content><![CDATA[<p><strong>JS 预解析</strong></p>
+<p><strong>1.</strong> 代码执行前先预解析，先找关键字， var、function 将呢些变量<br>“提前”到外部脚本或外部函数作用域的顶部（先开辟内存空间）。</p>
+<p><strong>2.</strong> var 和 function <strong>同名时</strong>，<strong>以function</strong><br><strong>的优先级更高（存在多个函数重名，取最后一个）</strong></p>
+<p><strong>3.</strong> <strong>以表达式声明的</strong> <strong>函数</strong> <strong>只是</strong> <strong>var</strong> ‘<strong>变量</strong>‘<br><strong>会</strong>“<strong>被提前</strong>” <strong>而给变量的赋值</strong><br><strong>不会提前即以表达式方式定义的函数在定义之前无法调用</strong>。</p>
+<p><strong>4.</strong> 函数作用域 在执行的时候 如上 也适用。</p>
+<p>亦叫做预编译</p>
+<p>JavaScript中, 是有预编译的过程的, Javascript在执行每一段Javascript代码之前,<br>都会首先处理var关键字和function定义式(函数定义式和函数表达式).</p>
+<p>在调用函数执行之前, 会首先创建一个活动对象,<br>然后搜寻这个函数中的局部变量定义,和函数定义,<br>将变量名和函数名都做为这个活动对象的同名属性,<br>对于局部变量定义,变量的值会在真正执行的时候才计算, 此时只是简单的赋为undefined.</p>
+<p><strong>例如</strong>：</p>
+<p><img src="/css/images/media/8ca420f20da03bb798655095064d2ce7.png" alt="clipboard.png"></p>
+<p>上面总体顺序是：</p>
+<p>1： 预解析（找关键字 var、function） 提前 变量 c （第2行）和 ab （第3行）<br>（undefined）</p>
+<p>2: 执行第 1 行 console // 这里是 undefined</p>
+<p>3： 执行第 3 行 ab的赋值 // 这里只执行 ab=?<br>的赋值，（跳过声明，因为预解析阶段已经执行过了）</p>
+<p>4： 执行第 4 行的console // 这里是 f() { }</p>
+<p><strong>再例如</strong>：</p>
+<p><img src="/css/images/media/cdae428a3c26bfb0bc8b5f78a3458010.png" alt="clipboard.png"></p>
+<p>总体顺序是：</p>
+<p>1： 先预解析（找关键字 var、function） 提前 变量 ab （第2行）和 ab （第3行<br>函数体） 和ab(第4行)</p>
+<p>2: 执行第 1 行 console // 这里是 ƒ ab() {}</p>
+<p>3： 执行第 2 行 ab的赋值 // 这里只执行 ab=? 的赋值， 这里赋值ab 为<br>1（跳过声明，因为预解析阶段已经执行过了）</p>
+<p>4： 执行第 4 行 ab的赋值 // 这里只执行 ab=? 的赋值， 这里赋值ab 为<br>2（跳过声明，因为预解析阶段已经执行过了）</p>
+<p>5： 执行第 5 行的console // 这里是 2</p>
+<p><strong>JS 作用域及作用域链</strong></p>
+<p><strong>一、作用域</strong></p>
+<p>在 Javascript 中，作用域分为 <strong>全局作用域</strong> 和 <strong>函数作用域</strong></p>
+<p><strong>全局作用域：</strong></p>
+<p>代码在程序的任何地方都能被访问，window 对象的内置属性都拥有全局作用域。</p>
+<p><strong>函数作用域：</strong></p>
+<p>在固定的代码片段才能被访问</p>
+<p>例子：</p>
+<p><img src="/css/images/media/d9413b41b66128c9f107f17ccb5973b4.png" alt="708372951952.png"></p>
+<p>作用域有上下级关系，上下级关系的确定就看函数是在哪个作用域下创建的。如上，fn作用域下创建了bar函数，那么“fn作用域”就是“bar作用域”的上级。</p>
+<p>作用域最大的用处就是隔离变量，不同作用域下同名变量不会有冲突。</p>
+<p>变量取值：<strong>到创建 这个变量 的函数的作用域中取值</strong></p>
+<p><strong>二、作用域链</strong></p>
+<p><strong>一般情况下，变量取值到 创建 这个变量 的函数的作用域中取值。</strong></p>
+<p><strong>但是如果在当前作用域中没有查到值，就会向上级作用域去查，直到查到全局作用域，这么一个查找过程形成的链条就叫做作用域链。</strong></p>
+<p><img src="/css/images/media/51e409b11aa51c150090697429a953ed.gif" alt="copycode.gif"></p>
+<p>var x = 10; function fn(){ console.log(x); } function show(f){ var x = 20;<br>(function(){ f(); // 10})() } show(fn);</p>
+<p><img src="/css/images/media/51e409b11aa51c150090697429a953ed.gif" alt="copycode.gif"></p>
+<p><img src="/css/images/media/9cc842278af68b0da1f27b1d2a0c9e7d.png" alt="448515607115.png"></p>
+<p><img src="/css/images/media/013b8c886ef0376d98d2a0800494a9a4.png" alt="clipboard.png"></p>
+<p>上面的ab 是局部变量，只在 fnScope 这个作用域内生效，外面没有，所以报错。</p>
+<p><img src="/css/images/media/bbe9db28ee0ef0df72c32f1aac3b24e6.png" alt="clipboard.png"></p>
+<p><img src="/css/images/media/393f7b81743ed04237dbfed1afd4f58a.png" alt="clipboard.png"></p>
+<p>形参也是先创建局部变量，作为活动对象的参数。和实参没关系，只是复制了下实参的值，（对象传递的话，更改属性会有关系，实参也会变，址传递）</p>
+<p><img src="/css/images/media/2cd9bdcc8289ca6295239b24f00e8192.png" alt="clipboard.png"></p>
+<p><img src="/css/images/media/93f3a50ecc213d7bbcd3d871087e8c36.png" alt="clipboard.png"></p>
+<p>图例如下：</p>
+<p><img src="/css/images/media/29ee9c552693d0a93f081a9a5488ff82.png" alt="clipboard.png"></p>
+<p>实参为对象时：</p>
+<p><img src="/css/images/media/8cd951a9d26caa01814d26a41105d012.png" alt="clipboard.png"></p>
+<p>上面代码在执行函数的时候，先预解析，给ab变量分配内存空间，作为活动对象的参数，形参也分配，由于活动对象上有该参数了（同名），这里就直接赋值实参了，（实参是个对象，也就是说这里是址传递，复制到活动对象的ab属性上，然而ab<br>又被赋值给了1，所以这里就和原实参没有任何关系了）</p>
+<p>总体顺序为：</p>
+<p>外部： 先预解析 提前 ab fn, 然后执行赋值ab fn()运行 打印ab 的过程</p>
+<p>fn()内部： 先预解析 ab 作为活动对象的参数 此时为 undefined</p>
+<p>在把实参 赋给形参 ab(活动对象的变量（局部变量）);</p>
+<p>在 打印 ab (此时为{k:1}) , 然后 赋值 ab 在打印ab (此时为1)</p>
+<p><img src="/css/images/media/0dcdf6476314c591e646e2a7a873afc8.png" alt="clipboard.png"></p>
+<p>这里同上， fn()中 没有对 ab声明，不过形参相当于也是 var了一下，挂到了<br>活动对象上，就有这个局部参数了。</p>
+<p><img src="/css/images/media/a860dc1990b212d7a3e7114fd86c92cc.png" alt="clipboard.png"></p>
+<p>上面更改的是 传递参数的 属性，由于是址传递 会影响到原 实参的值。</p>
+<p>如果对ab 是 直接赋值 某个数或者字符串 亦或者 是 个 对象 数组<br>（只要不是更改ab的属性） 就不会在和 原参数 产生关系了， 比如 直接赋值 ab= 1<br>true, “abc” ,{a:123} 函数内部的ab 会被赋值， 而外部的 ab不会受到影响。</p>
+<p><img src="/css/images/media/10480ad184e6b9f50531b894456ae4a2.png" alt="clipboard.png"></p>
+<p>知识扩展：</p>
+<p>1. 作用域（scope）指的是变量存在的范围。在 ES5 的规范中，Javascript<br>只有两种作用域：一种是全局作用域，变量在整个程序中一直存在，所有地方都可以读取；另一种是函数作用域，变量只在函数内部存在。ES6<br>又新增了块级作用域。</p>
+<p>2.<br>对于var命令来说，局部变量只能在函数内部声明，在其他区块中声明，一律都是全局变量。</p>
+<p>if (true) { var x = 5; }console.log(x); // 5</p>
+<p>3. 函数的同名参数</p>
+<p>如果有同名的参数，则取最后出现的那个值。</p>
+<p>function f(a, a) { console.log(a); }f(1, 2) // 2</p>
+<p>上面代码中，函数f有两个参数，且参数名都是a。取值的时候，以后面的a为准，即使后面的a没有值或被省略，也是以其为准</p>
+<p>function f(a, a) { console.log(a); }f(1) // undefined</p>
+<p>调用函数f的时候，没有提供第二个参数，a的取值就变成了undefined。这时，如果要获得第一个a的值，可以使用arguments对象。</p>
+<p>function f(a, a) { console.log(arguments[0]); }f(1) // 1</p>
+<p>4. JS 执行环境（EC），变量对象（VO），活动对象（AO），作用域链（scope chain）</p>
+<p>详见： <a href="https://www.jianshu.com/p/82691a18562d">https://www.jianshu.com/p/82691a18562d</a></p>
+]]></content>
+      <tags>
+        <tag>js</tag>
+      </tags>
+  </entry>
+</search>
