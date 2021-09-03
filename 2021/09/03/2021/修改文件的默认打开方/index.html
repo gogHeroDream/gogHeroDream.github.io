@@ -10,7 +10,7 @@
   
   <title>
     
-      border 的骚操作 css 画三角形 | 日常随笔
+      修改文件的默认打开方式 | 日常随笔
     
   </title>
   <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
@@ -192,8 +192,8 @@
 </header>
 
     <div id="article-banner">
-  <h2>border 的骚操作 css 画三角形</h2>
-  <p class="post-date">2021-09-02</p>
+  <h2>修改文件的默认打开方式</h2>
+  <p class="post-date">2021-09-03</p>
   <div class="arrow-down">
     <a href="javascript:;"></a>
   </div>
@@ -201,124 +201,22 @@
 <main class="app-body flex-box">
   <!-- Article START -->
   <article class="post-article">
-    <section class="markdown-content"><p>border-width: 50px 18px 50px 38px;</p>
-<p>border-style: solid;</p>
-<p>border-color: red green yellow pink;</p>
-<p>四个参数 都是 上 右 下 左</p>
-<p><img src="/css/images/media/bd7c202b66ce65a45dbc69e31275b061.png" alt="clipboard.png"></p>
-<p>三个参数 上 （左右） 下</p>
-<p><img src="/css/images/media/619368d08ecb5d6a0a06714a34d42f2f.png" alt="clipboard.png"></p>
-<p>两个就是 （上下） （左右）</p>
-<p><img src="/css/images/media/c11ad46a4f3bdbe4305cb548148ee757.png" alt="clipboard.png"></p>
-<p><img src="/css/images/media/affe4755dc2d5af99f0111cea088bc53.png" alt="clipboard.png"></p>
-<p>进阶： 五边形对话框 （快速提问）</p>
-<p>&lt;div @click=”isAddDialogShow= true”<br>@mouseenter=”($event)=&gt;{$event.target.classList.<strong>add</strong>(‘question-hover’)}”<br>@mouseleave=”($event)=&gt;{$event.target.classList.<strong>remove</strong>(‘question-hover’)}”<br>class=”question-body flex-center”&gt;</p>
-<p>&lt;i class=”el-icon-edit” style=”font-size:20px;color: #aaa;”&gt;&lt;/i&gt;</p>
-<p>&lt;p class=”flex-center ask-questions flex-column” style=”margin-bottom: 0;”&gt;</p>
-<p>&lt;span class=”d-flex flex-1 question-text”&gt;我&nbsp;要&lt;/span&gt;</p>
-<p>&lt;span class=”d-flex flex-1 question-text”&gt;提&nbsp;问&lt;/span&gt;</p>
-<p>&lt;/p&gt;</p>
-<p>&lt;/div&gt;</p>
-<p>// before after 伪类部分重点</p>
-<p>.d-flex{</p>
-<p>display: flex;</p>
-<p>}</p>
-<p>.flex-center{</p>
-<p>display:flex;</p>
-<p>align-items: center;</p>
-<p>justify-content:center;</p>
-<p>}</p>
-<p>.flex-1{</p>
-<p>flex:1;</p>
-<p>}</p>
-<p>.flex-column {</p>
-<p>flex-direction: column;</p>
-<p>}</p>
-<p>.question-body{</p>
-<p>cursor: pointer;</p>
-<p>position: fixed;</p>
-<p>bottom:30px;</p>
-<p>right:10px;</p>
-<p>width:50px;</p>
-<p>height:35px;</p>
-<p>padding:2px;</p>
-<p>background-color: <em>#FFFFFF</em>;</p>
-<p>border: <em>#cccccc</em> solid 1px;</p>
-<p>border-radius: 3px;</p>
-<p>&amp;.question-hover{</p>
-<p>background: <em>#99e51c</em>;</p>
-<p>color: <em>#fff</em>;</p>
-<p>.el-icon-edit{</p>
-<p>display: none;</p>
-<p>}</p>
-<p>.ask-questions{</p>
-<p>display: flex;</p>
-<p>}</p>
-<p>&amp;::before{</p>
-<p>border-top:8px solid <em>#99e51c</em>;</p>
-<p>}</p>
-<p>}</p>
-<p>.el-icon-edit{</p>
-<p>display: block;</p>
-<p>}</p>
-<p>.ask-questions{</p>
-<p>display: none;</p>
-<p>height: 100%;</p>
-<p>width: 100%;</p>
-<p>.question-text{</p>
-<p>font-size: 12px;</p>
-<p>height:50%;</p>
-<p>line-height: 12px;</p>
-<p>align-items: center;</p>
-<p>}</p>
-<p>}</p>
-<p>&amp;::before{</p>
-<p>box-sizing: content-box;</p>
-<p>width: 0px;</p>
-<p>height: 0px;</p>
-<p>position: absolute;</p>
-<p>bottom: -16px;;</p>
-<p>left:0px;</p>
-<p>padding:0;</p>
-<p>border-top:8px solid <em>#FFFFFF</em>;</p>
-<p>border-bottom:8px solid transparent;</p>
-<p>// border-left:8px solid transparent;</p>
-<p>border-right:8px solid transparent;</p>
-<p>display: block;</p>
-<p>content:’’;</p>
-<p>z-index: 12;</p>
-<p>}</p>
-<p>&amp;::after{</p>
-<p>box-sizing: content-box;</p>
-<p>width: 0px;</p>
-<p>height: 0px;</p>
-<p>position: absolute;</p>
-<p>bottom: -18px;</p>
-<p>left:-1px;</p>
-<p>padding:0;</p>
-<p>border-top:9px solid <em>#cccccc</em>;</p>
-<p>border-bottom:9px solid transparent;</p>
-<p>// border-left:9px solid transparent;</p>
-<p>border-right:12px solid transparent;</p>
-<p>display: block;</p>
-<p>content:’’;</p>
-<p>z-index:10</p>
-<p>}</p>
-<p>}</p>
-<p><img src="/css/images/media/774c20ece6259a004d0b306e8aeb9ed7.png" alt="clipboard.png"></p>
-<p><img src="/css/images/media/fd6505d81312ead71c1dc4e66420ffc8.png" alt="clipboard.png"></p>
+    <section class="markdown-content"><blockquote>
+<p>前言： 我们在日常操作中对于一些文件资源的打开方式都是有一个默认的配置的，然而默认的可能不是我们想要的，例如：我们希望打开pdf文档的是谷歌而不是edge</p>
+</blockquote>
+<p>这里鼠标悬停可以看到类型是 edge 文档<br><img src="/css/images/2021/20210903115722.png" alt="clipboard.png"><br>首先右键点击 下拉找到属性点击属性 后 可以看到如下图<br><img src="/css/images/2021/20210903115513.png" alt="clipboard.png"><br>点击更改，选择谷歌浏览器，再次查看的时候，默认打开就已将改为了谷歌。</p>
 </section>
     <!-- Tags START -->
     
       <div class="tags">
         <span>Tags:</span>
         
-  <a href="/tags#html" >
-    <span class="tag-code">html</span>
+  <a href="/tags#日常" >
+    <span class="tag-code">日常</span>
   </a>
 
-  <a href="/tags#css" >
-    <span class="tag-code">css</span>
+  <a href="/tags#浏览器" >
+    <span class="tag-code">浏览器</span>
   </a>
 
       </div>
@@ -329,20 +227,13 @@
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-      <a class="nav-left" href="/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/array%E6%96%B9%E6%B3%95/">
+      <a class="nav-left" href="/2021/09/02/border%20%E7%9A%84%E9%AA%9A%E6%93%8D%E4%BD%9C%20%20css%20%E7%94%BB%E4%B8%89%E8%A7%92%E5%BD%A2/">
         <span class="nav-arrow">← </span>
         
-          array方法
+          border 的骚操作 css 画三角形
         
       </a>
     
-    
-      <a class="nav-right" href="/2021/09/03/2021/%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E7%9A%84%E9%BB%98%E8%AE%A4%E6%89%93%E5%BC%80%E6%96%B9/">
-        
-          修改文件的默认打开方式
-        
-        <span class="nav-arrow"> →</span>
-      </a>
     
   </div>
 
@@ -404,7 +295,7 @@
 
 <script>
   (function () {
-    var url = 'http://example.com/2021/09/02/border 的骚操作  css 画三角形/';
+    var url = 'http://example.com/2021/09/03/2021/修改文件的默认打开方/';
     var banner = ''
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({

@@ -165,31 +165,26 @@
   <entry>
     <title>array方法</title>
     <url>/2021/09/02/%E5%89%8D%E7%AB%AF%E5%AD%A6%E4%BA%9B%E5%BF%83%E5%BE%97/array%E6%96%B9%E6%B3%95/</url>
-    <content><![CDATA[<p><strong>flat / flatMap</strong></p>
-<p>数组的成员有时还是数组，Array.prototype.flat()用于将嵌套的数组“拉平”，变成一维数组。该方法返回一个新数组，对原数据没有影响。</p>
-<p>[1, 2, [3, 4]].flat() // [1, 2, 3, 4]</p>
+    <content><![CDATA[<h3 id="flat-flatMap"><a href="#flat-flatMap" class="headerlink" title="flat / flatMap"></a>flat / flatMap</h3><p>数组的成员有时还是数组，Array.prototype.flat()用于将嵌套的数组“拉平”，变成一维数组。该方法返回一个新数组，对原数据没有影响。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">[<span class="number">1</span>, <span class="number">2</span>, [<span class="number">3</span>, <span class="number">4</span>]].flat() <span class="comment">// [1, 2, 3, 4]</span></span><br></pre></td></tr></table></figure>
 <p>上面代码中，原数组的成员里面有一个数组，flat()方法将子数组的成员取出来，添加在原来的位置。</p>
 <p>flat()默认只会“拉平”一层，如果想要“拉平”多层的嵌套数组，可以将flat()方法的参数写成一个整数，表示想要拉平的层数，默认为1。</p>
-<p>[1, 2, [3, [4, 5]]].flat() // [1, 2, 3, [4, 5]] [1, 2, [3, [4, 5]]].flat(2) //<br>[1, 2, 3, 4, 5]</p>
-<p>[1, 2, {“0”:123}, [3, [4, 5]]].flat(2)</p>
-<p>//[1, 2, {0: 123}, 3, 4, 5] //伪数组没用，只拉数组 （Set, Map 等数据结构同理）</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">[<span class="number">1</span>, <span class="number">2</span>, [<span class="number">3</span>, [<span class="number">4</span>, <span class="number">5</span>]]].flat() <span class="comment">// [1, 2, 3, [4, 5]]</span></span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, [<span class="number">3</span>, [<span class="number">4</span>, <span class="number">5</span>]]].flat(<span class="number">2</span>) <span class="comment">//[1, 2, 3, 4, 5]</span></span><br><span class="line"></span><br><span class="line">[<span class="number">1</span>, <span class="number">2</span>, &#123;<span class="string">&quot;0&quot;</span>:<span class="number">123</span>&#125;, [<span class="number">3</span>, [<span class="number">4</span>, <span class="number">5</span>]]].flat(<span class="number">2</span>) <span class="comment">//[1, 2, &#123;0: 123&#125;, 3, 4, 5] //伪数组没用，只拉数组 （Set, Map 等数据结构同理）</span></span><br></pre></td></tr></table></figure>
 <p>上面代码中，flat()的参数为2，表示要拉平两层的嵌套数组。</p>
 <p>如果不管有多少层嵌套，都要转成一维数组，可以用Infinity关键字作为参数。</p>
-<p>[1, [2, [3]]].flat(Infinity) // [1, 2, 3]</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">[<span class="number">1</span>, [<span class="number">2</span>, [<span class="number">3</span>]]].flat(<span class="literal">Infinity</span>) <span class="comment">// [1, 2, 3]</span></span><br></pre></td></tr></table></figure>
 <p>如果原数组有空位，flat()方法会跳过空位。</p>
-<p>[1, 2, , 4, 5].flat() // [1, 2, 4, 5]</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">[<span class="number">1</span>, <span class="number">2</span>, , <span class="number">4</span>, <span class="number">5</span>].flat() <span class="comment">// [1, 2, 4, 5]</span></span><br></pre></td></tr></table></figure>
 <p>flatMap()方法对原数组的每个成员执行一个函数，相当于执行Array.prototype.map(),然后对返回值组成的数组执行flat()方法。该方法返回一个新数组，不改变原数组。</p>
-<p>// 相当于 [[2, 4], [3, 6], [4, 8]].flat() [2, 3, 4].flatMap((x) =&gt; [x, x * 2])<br>// [2, 4, 3, 6, 4, 8]</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">[<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>].flatMap(<span class="function">(<span class="params">x</span>) =&gt;</span> [x, x * <span class="number">2</span>, x-<span class="number">1</span>]) <span class="comment">// [2, 4, 1, 3, 6, 2, 4, 8, 3]</span></span><br><span class="line"><span class="comment">// 相当于 [[2, 4, 1], [3, 6, 2], [4, 8, 3]].flat() </span></span><br></pre></td></tr></table></figure>
 <p>flatMap()只能展开一层数组。</p>
-<p><strong>reduce</strong></p>
-<p>reduce()<br>方法接收一个函数作为累加器，数组中的每个值（从左到右）开始缩减，最终计算为一个值。</p>
+<h3 id="reduce"><a href="#reduce" class="headerlink" title="reduce"></a>reduce</h3><p>reduce()<br>方法接收一个函数作为累加器，数组中的每个值（从左到右）开始缩减，最终计算为一个值。</p>
 <p>reduce() 可以作为一个高阶函数，用于函数的 compose。</p>
 <p><strong>注意:</strong> reduce() 对于空数组是不会执行回调函数的。</p>
 <p>实例1 ：</p>
-<p>var numbers = [65, 44, 12, 4];function getSum(total, num) { return total +<br>num;}function myFunction(item) { document.getElementById(“demo”).innerHTML =<br>numbers.reduce(getSum);}</p>
-<p>//输出 125</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> numbers = [<span class="number">65</span>, <span class="number">44</span>, <span class="number">12</span>, <span class="number">4</span>];<span class="function"><span class="keyword">function</span> <span class="title">getSum</span>(<span class="params">total, num</span>) </span>&#123; <span class="keyword">return</span> total +</span><br><span class="line">num;&#125;<span class="function"><span class="keyword">function</span> <span class="title">myFunction</span>(<span class="params">item</span>) </span>&#123; <span class="built_in">document</span>.getElementById(<span class="string">&quot;demo&quot;</span>).innerHTML =</span><br><span class="line">numbers.reduce(getSum);&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//输出 125</span></span><br></pre></td></tr></table></figure>
 <p>语法为：</p>
-<p>array.reduce(function(total, currentValue, currentIndex, arr), initialValue)</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">array.reduce(<span class="function"><span class="keyword">function</span>(<span class="params">total, currentValue, currentIndex, arr</span>), <span class="title">initialValue</span>)</span></span><br></pre></td></tr></table></figure>
 <p><strong>参数</strong></p>
 <table>
 <thead>
@@ -206,30 +201,11 @@
 <td><em>initialValue</em></td>
 <td>可选。传递给函数的初始值</td>
 </tr>
-<tr>
-<td>参数</td>
-<td>描述</td>
-</tr>
-<tr>
-<td><em>total</em></td>
-<td>必需。<em>初始值</em>, 或者计算结束后的返回值。</td>
-</tr>
-<tr>
-<td><em>currentValue</em></td>
-<td>必需。当前元素</td>
-</tr>
-<tr>
-<td><em>currentIndex</em></td>
-<td>可选。当前元素的索引</td>
-</tr>
-<tr>
-<td><em>arr</em></td>
-<td>可选。当前元素所属的数组对象。</td>
-</tr>
 </tbody></table>
+<p>| function 内参数                                      | 描述                                         |<br>| <em>total</em>                                   | 必需。<em>初始值</em>, 或者计算结束后的返回值。     |<br>| <em>currentValue</em>                            | 必需。当前元素                               |<br>| <em>currentIndex</em>                            | 可选。当前元素的索引                         |<br>| <em>arr</em>                                     | 可选。当前元素所属的数组对象。               |</p>
 <p><strong>实例2</strong></p>
 <p>四舍五入后计算数组元素的总和：</p>
-<p>&lt;button onclick=”myFunction()”&gt;点我&lt;/button&gt;&lt;p&gt;数组元素之和: &lt;span<br>id=”demo”&gt;&lt;/span&gt;&lt;/p&gt;&lt;script&gt;var numbers = [15.5, 2.3, 1.1, 4.7];<br>function getSum(total, num) { return total + Math.round(num); } function<br>myFunction(item) { document.getElementById(“demo”).innerHTML =<br>numbers.reduce(getSum, 0); }&lt;/script&gt;</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line">&lt;button onclick=<span class="string">&quot;myFunction()&quot;</span>&gt;点我&lt;/button&gt;</span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span>数组元素之和: </span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;<span class="name">span</span> <span class="attr">id</span>=<span class="string">&quot;demo&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"></span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="keyword">var</span> numbers = [<span class="number">15.5</span>, <span class="number">2.3</span>, <span class="number">1.1</span>, <span class="number">4.7</span>];</span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="function"><span class="keyword">function</span> <span class="title">getSum</span>(<span class="params">total, num</span>) </span>&#123; </span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="keyword">return</span> total + <span class="built_in">Math</span>.round(num); </span></span></span><br><span class="line"><span class="javascript"><span class="xml">  &#125; </span></span></span><br><span class="line"><span class="javascript"><span class="xml">  <span class="function"><span class="keyword">function</span>  <span class="title">myFunction</span>(<span class="params">item</span>) </span>&#123; </span></span></span><br><span class="line"><span class="javascript"><span class="xml">    <span class="built_in">document</span>.getElementById(<span class="string">&quot;demo&quot;</span>).innerHTML = numbers.reduce(getSum, <span class="number">0</span>); </span></span></span><br><span class="line"><span class="javascript"><span class="xml">  &#125;</span></span></span><br><span class="line"><span class="javascript"><span class="xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
 <p>输出 24</p>
 ]]></content>
       <tags>
@@ -1131,6 +1107,19 @@
 ]]></content>
       <tags>
         <tag>js</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>修改文件的默认打开方式</title>
+    <url>/2021/09/03/2021/%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%E7%9A%84%E9%BB%98%E8%AE%A4%E6%89%93%E5%BC%80%E6%96%B9/</url>
+    <content><![CDATA[<blockquote>
+<p>前言： 我们在日常操作中对于一些文件资源的打开方式都是有一个默认的配置的，然而默认的可能不是我们想要的，例如：我们希望打开pdf文档的是谷歌而不是edge</p>
+</blockquote>
+<p>这里鼠标悬停可以看到类型是 edge 文档<br><img src="/css/images/2021/20210903115722.png" alt="clipboard.png"><br>首先右键点击 下拉找到属性点击属性 后 可以看到如下图<br><img src="/css/images/2021/20210903115513.png" alt="clipboard.png"><br>点击更改，选择谷歌浏览器，再次查看的时候，默认打开就已将改为了谷歌。</p>
+]]></content>
+      <tags>
+        <tag>日常</tag>
+        <tag>浏览器</tag>
       </tags>
   </entry>
 </search>
